@@ -9,15 +9,15 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
+        loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
       {
         path: 'location',
-        loadChildren: () => import('../location/location.module').then(m => m.Tab2PageModule)
+        loadChildren: () => import('../pages/location/location.module').then(m => m.Tab2PageModule)
       },
       {
         path: 'forecast',
-        loadChildren: () => import('../forecast/forecast.module').then(m => m.ForecastPageModule)
+        loadChildren: () => import('../pages/forecast/forecast.module').then(m => m.ForecastPageModule)
       },
       {
         path: '',
