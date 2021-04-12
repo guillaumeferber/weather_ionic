@@ -1,0 +1,20 @@
+<ng-container *ngIf="results;then hasResults else placeholder"></ng-container>
+<ng-template #hasResults>
+  <ng-container *ngFor="let result of results">
+    <ion-card>
+
+      <ion-card-header>
+        {{result.city_name}}
+      </ion-card-header>
+
+      <ion-card-content>
+        Temp. {{result.temp}}&deg;C
+        <!-- Add card content here! -->
+      </ion-card-content>
+
+    </ion-card>
+  </ng-container>
+</ng-template>
+<ng-template #placeholder>
+  <p>Veuillez faire une recherche</p>
+</ng-template>

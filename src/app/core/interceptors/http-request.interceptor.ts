@@ -15,12 +15,11 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log(request);
-
     const reqWithHeaders = request.clone({
-      // url: 'https://cors-anywhere.herokuapp.com/' + request.url,
       headers: request.headers.set('Content-Type', 'application/json'),
-      params: request.params.append('appid', environment.openWeatherMapApi.key)
+      params: request.params.append(
+        environment.api[environment.api.default].keyProp,
+        environment.api[environment.api.default].key)
     });
 
     console.log(reqWithHeaders);

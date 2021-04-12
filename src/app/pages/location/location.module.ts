@@ -7,6 +7,8 @@ import { LocationPage } from './location.page';
 import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
 import { LocationPageRoutingModule } from './location-routing.module';
+import { SearchModule } from './search/search.module';
+import { ResultsModule } from './results/results.module';
 
 @NgModule({
   imports: [
@@ -14,7 +16,9 @@ import { LocationPageRoutingModule } from './location-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    LocationPageRoutingModule
+    LocationPageRoutingModule,
+    SearchModule,
+    ResultsModule
   ],
   declarations: [LocationPage]
 })

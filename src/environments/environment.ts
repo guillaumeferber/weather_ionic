@@ -4,10 +4,20 @@
 
 export const environment = {
   production: false,
-  openWeatherMapApi: {
-    key: 'ce608a067fmsh54f9952cf643a81p1bbc3bjsn4570a04a88b3',
-    baseUrl: 'http://api.openweathermap.org/data/2.5/'
-  }
+  api: {
+    default: 'weatherbit',
+    weatherbit: {
+      keyProp: 'key',
+      key: '5a8ea8f781bd4aadaa9d2c868abe0f06',
+      baseUrl: 'https://api.weatherbit.io/v2.0/'
+    },
+    openWeatherMap: {
+      keyProp: 'appid',
+      key: '9113f85e772949f85e980bac5996f496',
+      baseUrl: 'https://api.openweathermap.org/data/2.5/'
+    }
+  },
+
 };
 
 /*
