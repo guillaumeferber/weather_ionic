@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpRequestInterceptor } from './core/interceptors/http-request.interceptor';
 import { SharedModule } from './shared/shared.module';
+import { AppStoreModule } from './store/store.module';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,10 +20,12 @@ import { SharedModule } from './shared/shared.module';
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    SharedModule],
+    SharedModule,
+    AppStoreModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
+    Geolocation
   ],
   bootstrap: [AppComponent],
 })

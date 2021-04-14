@@ -1,3 +1,5 @@
 export interface Query {
-  q: string;
+  q?: string;
+  lat?: number;
+  lon?: number;
 }
