@@ -1,0 +1,13 @@
+$alignments: center, left, right, justify;
+@each $alignment in $alignments {
+  .u-text-#{$alignment} {
+    text-align: $alignment;
+  }
+}
+
+$positions: static, relative, absolute, fixed, sticky;
+@each $position in $positions {
+    .u-position-#{$position} {
+        position: $position;
+    }
+}

@@ -22,7 +22,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         environment.api[environment.api.default].key)
     });
 
-    console.log(reqWithHeaders);
     return next.handle(reqWithHeaders);
   }
 }

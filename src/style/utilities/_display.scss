@@ -1,0 +1,54 @@
+$displays: block, inline-block, inline, flex, inline-flex, table, table-cell, table-row, none;
+@each $display in $displays {
+    .u-d-#{$display} {
+        display: $display !important;
+        & > * {
+          flex: 0 0 auto;
+        }
+    }
+}
+
+$directions: row, column;
+@each $direction in $directions {
+  .u-flex-#{$direction} {
+    flex-direction: $direction;
+  }
+}
+
+$wrapings: wrap, nowrap;
+@each $wraping in $wrapings {
+  .u-flex-#{$wraping} {
+    flex-wrap: $wraping;
+  }
+}
+
+$justify-contents: flex-start, flex-end, space-around, space-between, center;
+@each $justify-content in $justify-contents {
+  $value: '';
+  @if $justify-content==space-around {
+    $value: 'around';
+  } @else if $justify-content==space-between {
+    $value: 'between';
+  } @else if $justify-content==flex-start {
+    $value: 'start';
+  } @else if $justify-content==flex-end {
+    $value: 'end';
+  }
+    .u-justify-content-#{$value} {
+        justify-content: $justify-content !important;
+    }
+}
+
+$align-items: center, /* Les éléments sont regroupés au centre */
+start,  /* Les éléments sont regroupés au début */
+end,    /* Les éléments sont regroupés à la fin */
+flex-start, /* Les éléments flexibles sont regroupés au début */
+flex-end, /* Les éléments flexibles sont regroupés à la fin */
+stretch,
+self-start,
+self-end;
+@each $align-item in $align-items {
+    .u-align-items-#{$align-item} {
+        align-items: $align-item !important;
+    }
+}

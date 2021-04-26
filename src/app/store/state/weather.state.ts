@@ -1,3 +1,5 @@
+import { PositionError } from "@ionic-native/geolocation/ngx";
+
 export interface GeolocationCoordinates {
   readonly accuracy: number;
   readonly altitude: number | null;
@@ -10,5 +12,9 @@ export interface GeolocationCoordinates {
 
 export interface WeatherAppState {
   currentGeoLocation: GeolocationCoordinates;
-  error: string;
+  error: PositionError;
+  loading: boolean;
+}
+export interface AppState {
+  weather: WeatherAppState
 }

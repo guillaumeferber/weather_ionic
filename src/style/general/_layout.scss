@@ -1,0 +1,12 @@
+main {
+	width: 100%;
+	padding: 0 5px;
+}
+article {
+	margin: var(--margin-regular) auto;
+	width: 100%;
+
+	@media screen and (min-width: 50rem) {
+		width: 75%;
+	}
+}

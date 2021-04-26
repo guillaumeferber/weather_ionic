@@ -10,7 +10,7 @@ import * as WeatherActions from 'src/app/store/actions/weather.actions';
 export class AppComponent implements OnInit {
   constructor(private store: Store<WeatherAppState>) { }
   ngOnInit() {
-    this.store.dispatch(WeatherActions.getGeoLocation());
+
   }
 
 }

@@ -6,8 +6,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { WeatherEffects } from './effects/weather.effects';
 
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -22,6 +20,7 @@ import { WeatherEffects } from './effects/weather.effects';
         persist: true
       }
     })
-  ]
+  ],
+  exports: [EffectsModule, StoreModule]
 })
 export class AppStoreModule { }

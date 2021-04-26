@@ -1,0 +1,19 @@
+<section class="u-h-100">
+  <ion-content >
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide>
+
+        <ul>
+          <li>Temp. {{weatherData?.temp}}&deg;C</li>
+          <li>Prec. {{weatherData?.precip | percent}}</li>
+        </ul>
+      </ion-slide>
+      <ion-slide>
+        <h1>Slide 2</h1>
+      </ion-slide>
+      <ion-slides>
+        <h1>Slide 3</h1>
+      </ion-slides>
+    </ion-slides>
+  </ion-content>
+</section>

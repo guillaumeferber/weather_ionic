@@ -1,12 +1,13 @@
+import { PositionError } from "@ionic-native/geolocation/ngx";
 import { createSelector } from "@ngrx/store";
-import { GeolocationCoordinates, WeatherAppState } from "../state/weather.state";
+import { AppState, GeolocationCoordinates } from "../state/weather.state";
 
 export const selectCurrentGeoLocation = createSelector(
-  (state: WeatherAppState) => state.currentGeoLocation,
+  (state: AppState) => state.weather.currentGeoLocation,
   (location: GeolocationCoordinates) => location
 );
 
 export const selectError = createSelector(
-  (state: WeatherAppState) => state.error,
-  (error: string) => error
+  (state: AppState) => state.weather.error,
+  (error: PositionError) => error
 );
