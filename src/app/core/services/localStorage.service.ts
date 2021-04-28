@@ -26,7 +26,6 @@ export class LocalStorageService {
      const item = this.getItem(key);
      item.then((localItem: LocalStorageItem[]) => {
        const localObject = localItem as LocalStorageItem[];
-       console.log(localObject);
        const index = localObject.findIndex((val: LocalStorageItem) => val.id === value.id);
        if (index > -1) {
         localObject[index] = value;

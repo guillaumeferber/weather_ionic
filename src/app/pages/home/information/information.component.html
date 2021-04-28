@@ -2,10 +2,10 @@
   <ion-content >
     <ion-slides pager="true" [options]="slideOpts">
       <ion-slide>
-
         <ul>
           <li>Temp. {{weatherData?.temp}}&deg;C</li>
-          <li>Prec. {{weatherData?.precip | percent}}</li>
+          <li>Prec. {{weatherData?.precip.toFixed(2)}}%</li>
+          <li>Wind speed {{weatherData?.wind_spd | convert: ['mps', 'kmh']}} {{weatherData?.wind_cdir}}</li>
         </ul>
       </ion-slide>
       <ion-slide>

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InformationComponent } from './information.component';
 import { IonicModule } from '@ionic/angular';
+import { InformationComponent } from './information.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -11,7 +12,8 @@ import { IonicModule } from '@ionic/angular';
   ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    SharedModule
   ],
   exports: [InformationComponent]
 })

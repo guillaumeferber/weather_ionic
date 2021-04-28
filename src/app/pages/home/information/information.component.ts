@@ -9,12 +9,13 @@ import { CurrentObs } from 'src/app/core/models/currentObs.model';
 export class InformationComponent implements OnInit {
   @Input() weatherData: CurrentObs;
   slideOpts = {
-    initialSlide: 1,
+    initialSlide: 0,
     speed: 400
   };
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

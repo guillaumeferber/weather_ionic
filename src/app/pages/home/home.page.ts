@@ -38,7 +38,7 @@ export class HomePage implements OnInit {
       } as Query)
       .subscribe((result: CurrentObs[]) => {
         this.weatherData = result[0];
-        console.log(result);
+        console.log(this.weatherData);
         this.localStorageService.insertItem('weather', {
           ...result[0],
           id: this.guidService.uuidv4()

@@ -22,7 +22,7 @@ export interface CurrentObs {
   wind_dir?: number; // Wind direction (degrees)
   wind_cdir?: string; // Cardinal wind direction
   wind_cdir_full?: string; // Cardinal wind direction (text)
-  wind_speed?: number; // Wind speed - Default (m/s)
+  wind_spd?: number; // Wind speed - Default (m/s)
   temp?: number; // Temperature - Default (C)
   app_temp?: number; // Apparent temperature - Default (C)
   clouds?: number; // Cloud cover (%)
