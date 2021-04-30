@@ -1,3 +1,4 @@
+import { ForecastDay } from './../models/Forecast.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -17,6 +18,15 @@ export class OpenWeatherMapAPIService {
       params = params.append(key, query[key]);
     });
     return this.httpClient.get<CurrentObsGroup>(`${environment.api[environment.api.default].baseUrl}current`, { params }).pipe(map(results => results.data));
+  }
+
+  public getDailyForecast = (query: Query): Observable<ForecastDay> => {
+    let params = new HttpParams();
+    Object.keys(query).map(key => {
+      params = params.append(key, query[key]);
+    });
+    return this.httpClient.get<any>(`${environment.api[environment.api.default].baseUrl}forecast/daily`,
+      { params }).pipe(map(results => results.data));
   }
 
 

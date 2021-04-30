@@ -1,15 +1,22 @@
-<section class="u-h-100">
+<section class="u-h-100 u-p-l-sm u-p-r-sm u-p-b-md">
   <ion-content >
     <ion-slides pager="true" [options]="slideOpts">
       <ion-slide>
         <ul>
-          <li>Temp. {{weatherData?.temp}}&deg;C</li>
-          <li>Prec. {{weatherData?.precip.toFixed(2)}}%</li>
-          <li>Wind speed {{weatherData?.wind_spd | convert: ['mps', 'kmh']}} {{weatherData?.wind_cdir}}</li>
+          <li><span>TEMP.</span><span>{{weatherData?.temp}}&deg;C</span></li>
+          <li><span>FEELS LIKE</span><span>{{weatherData?.app_temp}}&deg;C</span></li>
+          <li><span>PREC.</span><span>{{weatherData?.precip}}%</span></li>
+          <li><span>WIND SPEED</span><span>{{weatherData?.wind_spd | convert: ['mps', 'kmh']}} {{weatherData?.wind_cdir}}</span></li>
         </ul>
       </ion-slide>
       <ion-slide>
-        <h1>Slide 2</h1>
+        <ul>
+          <li><span>SUNRISE</span><span>{{weatherData?.sunrise }}</span></li>
+          <li><span>SUNSET</span><span>{{weatherData?.sunset }}</span></li>
+          <li><span>UV</span><span>{{weatherData?.uv}}</span></li>
+          <li><span>HUMIDITY</span><span>{{weatherData?.rh}}%</span></li>
+          <li><span>AIR QUALITY</span><span>{{weatherData?.aqi}}</span></li>
+        </ul>
       </ion-slide>
       <ion-slides>
         <h1>Slide 3</h1>

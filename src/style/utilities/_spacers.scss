@@ -12,6 +12,14 @@ $sides: (top, bottom, left, right); // Leave this variable alone
             }
         }
 
+        .u-p-#{$space} {
+          @if $amount != 0 {
+              padding: #{$amount}rem;
+          } @else {
+              padding: #{$amount};
+          }
+      }
+
         .u-p-#{str-slice($side, 0, 1)}-#{$space} {
             @if $amount != 0 {
                 padding-#{$side}: #{$amount}rem;

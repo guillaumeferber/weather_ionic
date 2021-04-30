@@ -32,21 +32,19 @@ export class HomePage implements OnInit {
       .pipe(
         filter((location: GeolocationCoordinates) => !!location))
       .subscribe((location: GeolocationCoordinates) => {
-      this.weatherService.getCurrentWeather({
-        lat: location.latitude,
-        lon: location.longitude
-      } as Query)
-      .subscribe((result: CurrentObs[]) => {
-        this.weatherData = result[0];
-        console.log(this.weatherData);
-        this.localStorageService.insertItem('weather', {
-          ...result[0],
-          id: this.guidService.uuidv4()
-        } as LocalStorageItem);
-
-    })
-    })
-
+        this.weatherService.getCurrentWeather({
+          lat: location.latitude,
+          lon: location.longitude
+        } as Query)
+          .subscribe((result: CurrentObs[]) => {
+            this.weatherData = result[0];
+            console.log(this.weatherData);
+            this.localStorageService.insertItem('weather', {
+              ...result[0],
+              id: this.guidService.uuidv4()
+            } as LocalStorageItem);
+          });
+      });
   }
   findPosition() {
 

@@ -3,7 +3,6 @@
     <p class="u-text-center u-text-danger" *ngIf="selectError$ | async">{{(selectError$ | async)?.message}}</p>
     <div class="u-d-flex u-flex-column u-align-items-stretch">
       <app-header [weather]="weatherData"></app-header>
-      <hr class="u-w-75 u-m-l-auto">
       <app-information [weatherData]="weatherData"></app-information>
     </div>
   </app-explore-container>

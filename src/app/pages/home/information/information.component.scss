@@ -1,8 +1,41 @@
 ion-slides {
   height: 100%;
 }
+
+.swiper-slide {
+  text-align: left;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+ul {
+  list-style-type: none;
+  line-height: 1.4;
+  font-size: 1.6rem;
+  margin: 0;
+  padding: 0;
+  li {
+    display: flex;
+    align-items: center;
+    span:first-child {
+      min-width: 12rem;
+    }
+  }
+}
+
 section {
-  background: red;
+  position: relative;
   height: 35vh;
   width: 100%;
+  &:after {
+    position: absolute;
+    display: flex;
+    content: "";
+    height: 1px;
+    width: calc(100% - 2rem);
+    top: 0;
+    right: 0;
+    justify-content: flex-end;
+    background: var(--white);
+  }
 }

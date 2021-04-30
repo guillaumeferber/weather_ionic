@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 export interface LocalStorageItem {
   id: string;
+  city_name: string;
 }
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
@@ -26,7 +27,7 @@ export class LocalStorageService {
      const item = this.getItem(key);
      item.then((localItem: LocalStorageItem[]) => {
        const localObject = localItem as LocalStorageItem[];
-       const index = localObject.findIndex((val: LocalStorageItem) => val.id === value.id);
+       const index = localObject.findIndex((val: LocalStorageItem) => val.city_name === value.city_name);
        if (index > -1) {
         localObject[index] = value;
        } else {
