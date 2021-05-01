@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState, GeolocationCoordinates } from 'src/app/store/state/weather.state';
+import * as WeatherActions from 'src/app/store/actions/weather.actions';
 import * as WeatherSelectors from 'src/app/store/selectors/weather.selectors';
 import { filter } from 'rxjs/operators';
 import { Query } from 'src/app/core/models/query.model';
@@ -19,19 +20,20 @@ export class ForecastPage implements OnInit {
   constructor(private store: Store<AppState>,
     private weatherService: OpenWeatherMapAPIService) { }
   ngOnInit() {
-    this.selectCurrentGeoLocation$
-      .pipe(
-        filter((location: GeolocationCoordinates) => !!location))
-      .subscribe((location: GeolocationCoordinates) => {
-        this.weatherService.getDailyForecast({
-          lat: location.latitude,
-          lon: location.longitude
-        } as Query)
-          .subscribe((result: ForecastDay) => {
-            this.forecastDay = result;
-            console.log(this.forecastDay);
-          });
-      });
+    this.store.dispatch(WeatherActions.getForecastDaily());
+    // this.selectCurrentGeoLocation$
+    //   .pipe(
+    //     filter((location: GeolocationCoordinates) => !!location))
+    //   .subscribe((location: GeolocationCoordinates) => {
+    //     this.weatherService.getDailyForecast({
+    //       lat: location.latitude,
+    //       lon: location.longitude
+    //     } as Query)
+    //       .subscribe((result: ForecastDay) => {
+    //         this.forecastDay = result;
+    //         console.log(this.forecastDay);
+    //       });
+    //   });
   }
 
 }

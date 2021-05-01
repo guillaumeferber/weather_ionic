@@ -7,7 +7,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ConvertPipe implements PipeTransform {
   transform(value: number, ...args: any[]): any {
     const [from, to] = args;
-    console.log(value);
     return value && this.metersPerSecondTo(value, from, to);
   }
 

@@ -2,8 +2,8 @@
   <app-explore-container>
     <p class="u-text-center u-text-danger" *ngIf="selectError$ | async">{{(selectError$ | async)?.message}}</p>
     <div class="u-d-flex u-flex-column u-align-items-stretch">
-      <app-header [weather]="weatherData"></app-header>
-      <app-information [weatherData]="weatherData"></app-information>
+      <app-header [weather]="weatherData$ | async"></app-header>
+      <app-information [weatherData]="weatherData$ | async"></app-information>
     </div>
   </app-explore-container>
 </ion-content>
