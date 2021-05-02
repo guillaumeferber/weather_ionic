@@ -54,7 +54,7 @@ export const getForecastDaily = createAction(
 
 export const getForecastDailySuccess = createAction(
   WEATHER_ACTIONS.GET_CURRENT_FORECAST_SUCCESS,
-  props<{forecast: ForecastDay}>()
+  props<{forecast: ForecastDay, coords: GeolocationCoordinates}>()
 );
 
 export const getForecastDailyError = createAction(

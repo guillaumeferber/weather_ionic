@@ -51,25 +51,23 @@ export class WeatherEffects {
   getForecastDaily$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(WeatherActions.getForecastDaily),
-      concatMap(() => of([]).pipe(withLatestFrom(this.store.pipe(select(WeatherSelectors.selectCurrentGeoLocation))))),
-      map(([action, resp]: [any[], GeolocationCoordinates]) => {
-        console.log(resp);
-
-        this.weatherService.getDailyForecast({
-          lat: resp.latitude,
-          lon: resp.longitude
-        } as Query)
+      switchMap(() => {
+        return this.locationService.getCurrentPosition()
           .pipe(
-            map((forecast: ForecastDay) => {
-              this.localStorageService.insertItem('forecast', { ...forecast, id: this.guidService.uuidv4() } as LocalStorageItem);
-              return WeatherActions.getForecastDailySuccess({ forecast });
-            }));
-        return WeatherActions.getGeoLocationSuccess({
-          coords: {
-            longitude: resp.longitude,
-            latitude: resp.latitude
-          }
-        })
+            switchMap((resp: {coords: GeolocationCoordinates}) => {
+              return this.weatherService.getDailyForecast({
+                lat: resp.coords.latitude,
+                lon: resp.coords.longitude
+              } as Query)
+                .pipe(
+                  map((forecast: ForecastDay) => {
+                    this.localStorageService.insertItem('forecast', { ...forecast, id: this.guidService.uuidv4() } as LocalStorageItem);
+                    WeatherActions.getGeoLocationSuccess({ coords: resp.coords });
+                    return WeatherActions.getForecastDailySuccess({ forecast, coords: resp.coords });
+                  }));
+            }),
+            catchError((error: PositionError) => of(WeatherActions.getGeoLocationError({ error })))
+          )
       }),
       catchError((error: string) => of(WeatherActions.getForecastDailyError({ error })))
     )
