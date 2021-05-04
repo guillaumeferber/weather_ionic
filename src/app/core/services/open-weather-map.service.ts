@@ -1,4 +1,4 @@
-import { ForecastDay } from './../models/Forecast.model';
+import { Forecast, ForecastDay } from './../models/Forecast.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -25,8 +25,8 @@ export class OpenWeatherMapAPIService {
     Object.keys(query).map(key => {
       params = params.append(key, query[key]);
     });
-    return this.httpClient.get<any>(`${environment.api[environment.api.default].baseUrl}forecast/daily`,
-      { params }).pipe(map(results => results.data));
+    return this.httpClient.get<ForecastDay>(`${environment.api[environment.api.default].baseUrl}forecast/daily`,
+      { params });
   }
 
 

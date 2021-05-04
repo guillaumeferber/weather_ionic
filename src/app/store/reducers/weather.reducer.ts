@@ -3,7 +3,8 @@ import { GeolocationCoordinates, WeatherAppState } from "../state/weather.state"
 import * as WeatherActions from '../actions/weather.actions';
 import { PositionError } from "@ionic-native/geolocation/ngx";
 import { CurrentObs } from "src/app/core/models/currentObs.model";
-import { Forecast, ForecastDay } from "src/app/core/models/Forecast.model";
+import { ForecastDay } from "src/app/core/models/Forecast.model";
+
 const initialState: WeatherAppState = {
   currentGeoLocation: null,
   currentWeather: null,
@@ -44,18 +45,12 @@ const getCurrentWeatherSuccess = (state: WeatherAppState, value: CurrentObs) => 
   loading: initialState.loading
 });
 
-const getForecastDailySuccess = (state: WeatherAppState, value: ForecastDay, coords: GeolocationCoordinates) => (
-  {
-    ...state,
-    currentGeoLocation: {
-      latitude: coords.latitude,
-      longitude: coords.longitude
-    },
-    forecastDaily: value,
-    error: initialState.error,
-    loading: initialState.loading
-  }
-);
+const getForecastDailySuccess = (state: WeatherAppState, forecast: ForecastDay) => ({
+  ...state,
+  forecastDaily: forecast,
+  error: initialState.error,
+  loading: initialState.loading
+});
 
 const weatherReducer = createReducer(
   initialState,
@@ -68,7 +63,7 @@ const weatherReducer = createReducer(
   on(WeatherActions.getCurrentWeatherSuccess,
     (state: WeatherAppState, { value }: { value: CurrentObs }) => getCurrentWeatherSuccess(state, value)),
   on(WeatherActions.getForecastDailySuccess,
-    (state: WeatherAppState, { forecast, coords }: { forecast: ForecastDay, coords: GeolocationCoordinates }) => getForecastDailySuccess(state, forecast, coords)),
+    (state: WeatherAppState, { forecast }: { forecast: ForecastDay }) => getForecastDailySuccess(state, forecast)),
 );
 
 export function reducer(state: WeatherAppState | undefined, action: Action) {

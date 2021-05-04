@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Geoposition, PositionError } from '@ionic-native/geolocation/ngx';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
+import { TypedAction } from '@ngrx/store/src/models';
 import { of } from 'rxjs';
-import { catchError, concatMap, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, concatMap, exhaustMap, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { CurrentObs } from 'src/app/core/models/currentObs.model';
-import { ForecastDay } from 'src/app/core/models/Forecast.model';
+import { Forecast, ForecastDay } from 'src/app/core/models/Forecast.model';
 import { Query } from 'src/app/core/models/query.model';
 import { GuidService } from 'src/app/core/services/guid.service';
 import { LocalStorageItem, LocalStorageService } from 'src/app/core/services/localStorage.service';
@@ -35,11 +36,8 @@ export class WeatherEffects {
                 lon: resp.coords.longitude
               } as Query)
                 .pipe(
-                  map((observer: CurrentObs[]) => {
-                    const obs = observer[0];
-                    this.localStorageService.insertItem('weather', {...obs,id: this.guidService.uuidv4()} as LocalStorageItem);
-                    return WeatherActions.getCurrentWeatherSuccess({ value: obs })
-                  }));
+                  tap((resp: CurrentObs[]) => this.localStorageService.insertItem('weather', {...resp[0],id: this.guidService.uuidv4()} as LocalStorageItem)),
+                  map((observer: CurrentObs[]) => WeatherActions.getCurrentWeatherSuccess({ value: observer[0] })));
             }),
             catchError((error: PositionError) => of(WeatherActions.getGeoLocationError({ error })))
           )
@@ -48,30 +46,19 @@ export class WeatherEffects {
     )
   });
 
-  getForecastDaily$ = createEffect(() => {
-    return this.actions$.pipe(
+  getDailyForecast = createEffect(() => this.actions$.pipe(
       ofType(WeatherActions.getForecastDaily),
-      switchMap(() => {
-        return this.locationService.getCurrentPosition()
+      concatLatestFrom(() => this.store.select(WeatherSelectors.selectCurrentGeoLocation)),
+      switchMap(([action, resp]: [TypedAction<string>, GeolocationCoordinates]) => {
+        return this.weatherService.getDailyForecast({ lat: resp.latitude, lon: resp.longitude } as Query)
           .pipe(
-            switchMap((resp: {coords: GeolocationCoordinates}) => {
-              return this.weatherService.getDailyForecast({
-                lat: resp.coords.latitude,
-                lon: resp.coords.longitude
-              } as Query)
-                .pipe(
-                  map((forecast: ForecastDay) => {
-                    this.localStorageService.insertItem('forecast', { ...forecast, id: this.guidService.uuidv4() } as LocalStorageItem);
-                    WeatherActions.getGeoLocationSuccess({ coords: resp.coords });
-                    return WeatherActions.getForecastDailySuccess({ forecast, coords: resp.coords });
-                  }));
-            }),
-            catchError((error: PositionError) => of(WeatherActions.getGeoLocationError({ error })))
+            tap((forecast: ForecastDay) => this.localStorageService.insertItem('forecast', { ...forecast, id: this.guidService.uuidv4() } as LocalStorageItem)),
+            map((forecast: ForecastDay) => WeatherActions.getForecastDailySuccess({ forecast })),
+            catchError((error: string) => of(WeatherActions.getForecastDailyError({ error })))
           )
       }),
       catchError((error: string) => of(WeatherActions.getForecastDailyError({ error })))
-    )
-  });
+    ));
 
   constructor(
     private store: Store<AppState>,
