@@ -3,7 +3,7 @@ $displays: block, inline-block, inline, flex, inline-flex, table, table-cell, ta
     .u-d-#{$display} {
         display: $display !important;
         & > * {
-          flex: 0 0 auto;
+          flex: 1 0 auto;
         }
     }
 }
@@ -51,4 +51,12 @@ self-end;
     .u-align-items-#{$align-item} {
         align-items: $align-item !important;
     }
+}
+
+.u-d-flex {
+  &.u-flex-row-stretch {
+    & > * {
+      flex: 0 0 auto;
+    }
+  }
 }

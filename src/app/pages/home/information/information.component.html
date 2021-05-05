@@ -3,19 +3,19 @@
     <ion-slides pager="true" [options]="slideOpts">
       <ion-slide>
         <ul>
-          <li><span>TEMP.</span><span>{{weatherData?.temp}}&deg;C</span></li>
-          <li><span>FEELS LIKE</span><span>{{weatherData?.app_temp}}&deg;C</span></li>
-          <li><span>PREC.</span><span>{{weatherData?.precip}}%</span></li>
-          <li><span>WIND SPEED</span><span>{{weatherData?.wind_spd | convert: ['mps', 'kmh']}} {{weatherData?.wind_cdir}}</span></li>
+          <li><span>TEMP.</span><span>{{(weatherData$ | async)?.temp}}&deg;C</span></li>
+          <li><span>FEELS LIKE</span><span>{{(weatherData$ | async)?.app_temp}}&deg;C</span></li>
+          <li><span>PRECIP.</span><span>{{(weatherData$ | async)?.precip}}%</span></li>
+          <li><span>WIND SPEED</span><span>{{(weatherData$ | async)?.wind_cdir}} {{(weatherData$ | async)?.wind_spd | convert: ['mps', 'kmh']}}</span></li>
         </ul>
       </ion-slide>
       <ion-slide>
         <ul>
-          <li><span>SUNRISE</span><span>{{weatherData?.sunrise }}</span></li>
-          <li><span>SUNSET</span><span>{{weatherData?.sunset }}</span></li>
-          <li><span>UV</span><span>{{weatherData?.uv}}</span></li>
-          <li><span>HUMIDITY</span><span>{{weatherData?.rh}}%</span></li>
-          <li><span>AIR QUALITY</span><span>{{weatherData?.aqi}}</span></li>
+          <li><span>SUNRISE</span><span>{{(weatherData$ | async)?.sunrise }}</span></li>
+          <li><span>SUNSET</span><span>{{(weatherData$ | async)?.sunset }}</span></li>
+          <li><span>UV</span><span>{{(weatherData$ | async)?.uv}}</span></li>
+          <li><span>HUMIDITY</span><span>{{(weatherData$ | async)?.rh}}%</span></li>
+          <li><span>AIR QUALITY</span><span>{{(weatherData$ | async)?.aqi}}</span></li>
         </ul>
       </ion-slide>
       <ion-slides>

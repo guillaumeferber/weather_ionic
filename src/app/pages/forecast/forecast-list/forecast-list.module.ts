@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header.component';
+import { ForecastListComponent } from './forecast-list.component';
+import { IonicModule } from '@ionic/angular';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    ForecastListComponent
   ],
   imports: [
+    IonicModule,
     CommonModule,
     SharedModule
   ],
-  exports: [HeaderComponent]
+  exports: [ ForecastListComponent ]
 })
-export class HeaderModule { }
+export class ForecastListModule { }

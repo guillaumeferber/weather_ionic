@@ -7,6 +7,8 @@ import { ForecastPage } from './forecast.page';
 import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
 import { ForecastPageRoutingModule } from './forecast-routing.module';
+import { ForecastListModule } from './forecast-list/forecast-list.module';
+import { ForecastInformationModule } from './forecast-information/forecast-information.module';
 
 @NgModule({
   imports: [
@@ -16,6 +18,8 @@ import { ForecastPageRoutingModule } from './forecast-routing.module';
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: ForecastPage }]),
     ForecastPageRoutingModule,
+    ForecastListModule,
+    ForecastInformationModule
   ],
   declarations: [ForecastPage]
 })

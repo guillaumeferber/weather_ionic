@@ -1,0 +1,7 @@
+<ng-container *ngIf="(selectSelectedForecastDay$ | async)">
+  <section class="u-p-sm">
+    <p>Max temp: {{(selectSelectedForecastDay$ | async)?.max_temp}}&deg;C</p>
+    <p>Min temp: {{(selectSelectedForecastDay$ | async)?.min_temp}}&deg;C</p>
+    <p>Precip: {{(selectSelectedForecastDay$ | async)?.precip | percent}}</p>
+  </section>
+</ng-container>

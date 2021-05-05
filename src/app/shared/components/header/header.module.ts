@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -10,8 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HeaderComponent
   ],
   imports: [
-    CommonModule,
-    SharedModule
+    CommonModule
   ],
   exports: [HeaderComponent]
 })

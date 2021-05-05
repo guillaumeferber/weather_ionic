@@ -16,6 +16,8 @@ const WEATHER_ACTIONS = {
   GET_CURRENT_FORECAST: '[Weather] Get Current Forecast',
   GET_CURRENT_FORECAST_SUCCESS: '[Weather] Get Current WeatForecasther Success',
   GET_CURRENT_FORECAST_ERROR: '[Weather] Get Current Forecast Error',
+
+  SELECT_FORECAST_DAY: '[Weather] Select Forecast Day'
 };
 
 export const getGeoLocation = createAction(
@@ -59,4 +61,9 @@ export const getForecastDailySuccess = createAction(
 export const getForecastDailyError = createAction(
   WEATHER_ACTIONS.GET_CURRENT_FORECAST_ERROR,
   props<{error: string}>()
+);
+
+export const selectForecastDay = createAction(
+  WEATHER_ACTIONS.SELECT_FORECAST_DAY,
+  props<{id: number}>()
 );

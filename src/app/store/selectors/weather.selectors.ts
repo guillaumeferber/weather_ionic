@@ -1,7 +1,7 @@
 import { PositionError } from "@ionic-native/geolocation/ngx";
 import { createSelector } from "@ngrx/store";
 import { CurrentObs } from "src/app/core/models/currentObs.model";
-import { ForecastDay } from "src/app/core/models/Forecast.model";
+import { Forecast, ForecastDay } from "src/app/core/models/Forecast.model";
 import { AppState, GeolocationCoordinates } from "../state/weather.state";
 
 export const selectCurrentGeoLocation = createSelector(
@@ -22,4 +22,9 @@ export const selectCurrentWeather = createSelector(
 export const selectCurrentForecastDaily = createSelector(
   (state: AppState) => state.weather.forecastDaily,
   (forecast: ForecastDay) => forecast
+);
+
+export const selectSelectedForecastDay = createSelector(
+  (state: AppState) => state.weather.selectedForecastDaily,
+  (forecast: Forecast) => forecast
 );

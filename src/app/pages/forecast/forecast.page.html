@@ -1,31 +1,6 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <app-explore-container name="Forecast page">
-    <div class="c-container u-d-flex u-justify-content-between u-align-items-stretch">
-
-      <ng-container *ngFor="let item of (selectCurrentForecastDaily$ | async)?.data">
-        <ion-card class="u-w-15">
-          <ion-card-header>
-            <ion-card-title>{{item.datetime | date:'EEEE'}}</ion-card-title>
-            <ion-card-subtitle>{{item.precip}}%</ion-card-subtitle>
-          </ion-card-header>
-
-          <ion-card-content>
-            <div class="u-d-flex u-flex-column u-jutify-content-center">
-              <div><b>{{item.max_temp}}&deg;C</b></div>
-              <div><b>{{item.min_temp}}&deg;C</b></div>
-            </div>
-          </ion-card-content>
-        </ion-card>
-
-      </ng-container>
-    </div>
+  <app-explore-container>
+    <app-forecast-list></app-forecast-list>
+    <app-forecast-information></app-forecast-information>
   </app-explore-container>
 </ion-content>

@@ -1,9 +1,15 @@
-  <div class="u-d-flex u-justify-content-between u-p-sm">
-    <header>
-      <h2>{{dateTime | date: 'mediumDate'}}</h2>
-      <h3 class="h2">{{weather?.city_name}}</h3>
-    </header>
-    <aside>
-      <h1 class="u-m-r-0 u-text-vertical">{{weather?.weather?.description}}</h1>
-    </aside>
+  <div class="u-position-relative">
+    <div class="u-d-flex u-justify-content-between u-p-sm u-flex-row-stretch">
+      <app-header [title]="(weatherData$ | async)?.city_name" [subtitle]="dateTime | date: 'mediumDate'" class="u-p-b-50vh"></app-header>
+      <aside>
+        <h1 class="u-m-r-0 u-text-vertical">{{(weatherData$ | async)?.weather?.description}}</h1>
+      </aside>
+    </div>
+    <main>
+      <h1>
+        <ng-container *ngIf="(weatherData$ | async)">
+          {{(weatherData$ | async).temp}}&deg;C
+        </ng-container>
+      </h1>
+    </main>
   </div>

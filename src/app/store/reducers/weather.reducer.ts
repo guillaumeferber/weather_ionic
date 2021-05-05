@@ -9,6 +9,7 @@ const initialState: WeatherAppState = {
   currentGeoLocation: null,
   currentWeather: null,
   forecastDaily: null,
+  selectedForecastDaily: null,
   error: null,
   loading: false
 };
@@ -52,6 +53,11 @@ const getForecastDailySuccess = (state: WeatherAppState, forecast: ForecastDay) 
   loading: initialState.loading
 });
 
+const selectForecastDay = (state: WeatherAppState, id: number) => ({
+  ...state,
+  selectedForecastDaily: state.forecastDaily.data[id]
+})
+
 const weatherReducer = createReducer(
   initialState,
   on(WeatherActions.getGeoLocation,
@@ -64,6 +70,8 @@ const weatherReducer = createReducer(
     (state: WeatherAppState, { value }: { value: CurrentObs }) => getCurrentWeatherSuccess(state, value)),
   on(WeatherActions.getForecastDailySuccess,
     (state: WeatherAppState, { forecast }: { forecast: ForecastDay }) => getForecastDailySuccess(state, forecast)),
+  on(WeatherActions.selectForecastDay,
+    (state: WeatherAppState, { id }: { id: number }) => selectForecastDay(state, id)),
 );
 
 export function reducer(state: WeatherAppState | undefined, action: Action) {

@@ -1,6 +1,6 @@
 import { PositionError } from "@ionic-native/geolocation/ngx";
 import { CurrentObs } from "src/app/core/models/currentObs.model";
-import { ForecastDay } from "src/app/core/models/Forecast.model";
+import { Forecast, ForecastDay } from "src/app/core/models/Forecast.model";
 
 export interface GeolocationCoordinates {
   readonly latitude: number;
@@ -11,6 +11,7 @@ export interface WeatherAppState {
   currentGeoLocation: GeolocationCoordinates;
   currentWeather: CurrentObs;
   forecastDaily: ForecastDay;
+  selectedForecastDaily: Forecast;
   error: PositionError;
   loading: boolean;
 }
