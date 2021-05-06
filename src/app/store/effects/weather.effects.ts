@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Geoposition, PositionError } from '@ionic-native/geolocation/ngx';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { TypedAction } from '@ngrx/store/src/models';
 import { of } from 'rxjs';
-import { catchError, concatMap, exhaustMap, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { CurrentObs } from 'src/app/core/models/currentObs.model';
-import { Forecast, ForecastDay } from 'src/app/core/models/Forecast.model';
+import { ForecastDay } from 'src/app/core/models/Forecast.model';
 import { Query } from 'src/app/core/models/query.model';
 import { GuidService } from 'src/app/core/services/guid.service';
 import { LocalStorageItem, LocalStorageService } from 'src/app/core/services/localStorage.service';
@@ -22,6 +22,10 @@ export class WeatherEffects {
     return this.actions$.pipe(
       ofType(WeatherActions.getGeoLocation),
       switchMap(() => {
+        const localItem = this.localStorageService.getItemPlain('weather') as CurrentObs[];
+        if (localItem && Math.floor(Date.now() / 1000) < (localItem[0].ts + (3600 * 6))) {
+          return [WeatherActions.getCurrentWeatherSuccess({ value: localItem[0] })];
+        }
         return this.locationService.getCurrentPosition()
           .pipe(
             map((resp: Geoposition) => WeatherActions.getGeoLocationSuccess({
@@ -49,13 +53,20 @@ export class WeatherEffects {
   getDailyForecast = createEffect(() => this.actions$.pipe(
       ofType(WeatherActions.getForecastDaily),
       concatLatestFrom(() => this.store.select(WeatherSelectors.selectCurrentGeoLocation)),
-      switchMap(([action, resp]: [TypedAction<string>, GeolocationCoordinates]) => {
-        return this.weatherService.getDailyForecast({ lat: resp.latitude, lon: resp.longitude } as Query)
-          .pipe(
-            tap((forecast: ForecastDay) => this.localStorageService.insertItem('forecast', { ...forecast, id: this.guidService.uuidv4() } as LocalStorageItem)),
-            map((forecast: ForecastDay) => WeatherActions.getForecastDailySuccess({ forecast })),
-            catchError((error: string) => of(WeatherActions.getForecastDailyError({ error })))
-          )
+    switchMap(([action, resp]: [TypedAction<string>, GeolocationCoordinates]) => {
+      let _resp = resp as GeolocationCoordinates;
+      if (!_resp) {
+        const localItem = this.localStorageService.getItemPlain('weather') as CurrentObs[];
+        if (localItem && Math.floor(Date.now() / 1000) < (localItem[0].ts + (3600 * 6))) {
+          _resp = { latitude: localItem[0].lat, longitude: localItem[0].lon };
+        }
+      }
+      return this.weatherService.getDailyForecast({ lat: _resp.latitude, lon: _resp.longitude } as Query)
+        .pipe(
+          tap((forecast: ForecastDay) => this.localStorageService.insertItem('forecast', { ...forecast, id: this.guidService.uuidv4() } as LocalStorageItem)),
+          map((forecast: ForecastDay) => WeatherActions.getForecastDailySuccess({ forecast })),
+          catchError((error: string) => of(WeatherActions.getForecastDailyError({ error })))
+        )
       }),
       catchError((error: string) => of(WeatherActions.getForecastDailyError({ error })))
     ));

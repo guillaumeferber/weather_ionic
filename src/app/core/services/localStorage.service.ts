@@ -13,6 +13,10 @@ export class LocalStorageService {
   });
   }
 
+  getItemPlain = (key: string) => {
+    return JSON.parse(localStorage.getItem(key)) || [];
+  }
+
   setItem = async (key: string, value: LocalStorageItem | LocalStorageItem[]) => {
     return Promise.resolve().then(function () {
       localStorage.setItem(key, JSON.stringify(value));

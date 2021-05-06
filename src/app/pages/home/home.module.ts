@@ -17,7 +17,7 @@ import { InformationModule } from './information/information.module';
     ExploreContainerComponentModule,
     HomePageRoutingModule,
     HeaderModule,
-    InformationModule
+    InformationModule,
   ],
   declarations: [HomePage]
 })

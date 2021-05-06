@@ -1,0 +1,6 @@
+.u-background {
+  background-color: var(--theme-background);
+  &._500 {
+      --theme-background: #788C8F;
+  }
+}
