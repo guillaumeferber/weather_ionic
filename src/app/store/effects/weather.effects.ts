@@ -1,3 +1,4 @@
+import { getLocation } from './../actions/weather.actions';
 import { Injectable } from '@angular/core';
 import { Geoposition, PositionError } from '@ionic-native/geolocation/ngx';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
@@ -23,7 +24,7 @@ export class WeatherEffects {
       ofType(WeatherActions.getGeoLocation),
       switchMap(() => {
         const localItem = this.localStorageService.getItemPlain('weather') as CurrentObs[];
-        if (localItem && Math.floor(Date.now() / 1000) < (localItem[0].ts + (3600 * 6))) {
+        if (localItem && localItem.length && Math.floor(Date.now() / 1000) < (localItem[0].ts + (3600 * 6))) {
           return [WeatherActions.getCurrentWeatherSuccess({ value: localItem[0] })];
         }
         return this.locationService.getCurrentPosition()
@@ -57,7 +58,7 @@ export class WeatherEffects {
       let _resp = resp as GeolocationCoordinates;
       if (!_resp) {
         const localItem = this.localStorageService.getItemPlain('weather') as CurrentObs[];
-        if (localItem && Math.floor(Date.now() / 1000) < (localItem[0].ts + (3600 * 6))) {
+        if (localItem && localItem.length && Math.floor(Date.now() / 1000) < (localItem[0].ts + (3600 * 6))) {
           _resp = { latitude: localItem[0].lat, longitude: localItem[0].lon };
         }
       }
@@ -69,7 +70,19 @@ export class WeatherEffects {
         )
       }),
       catchError((error: string) => of(WeatherActions.getForecastDailyError({ error })))
-    ));
+  ));
+
+  getLocation$ = createEffect(() => this.actions$.pipe(
+    ofType(WeatherActions.getLocation),
+    switchMap((action: { query: Query }) => {
+      return this.weatherService.getCurrentWeather(action.query)
+        .pipe(
+          map((result: CurrentObs[]) => WeatherActions.getLocationSuccess({ location: result })),
+          catchError((error: string) => of(WeatherActions.getLocationError({ error })))
+      )
+    }),
+    catchError((error: string) => of(WeatherActions.getLocationError({ error })))
+  ));
 
   constructor(
     private store: Store<AppState>,

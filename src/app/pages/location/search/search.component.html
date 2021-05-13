@@ -1,3 +1,11 @@
-<form (ngSubmit)="validate()" [formGroup]="searchGroup">
-  <input type="text" formControlName="city" placeholder="Search city">
-</form>
+<section class="u-p-sm">
+<ion-button expand="full" (click)="addCity()">Add a city<ion-icon slot="end" name="add"></ion-icon></ion-button>
+<ng-container [ngTemplateOutlet]="(viewForm | async) ? form : placeholder"></ng-container>
+  <ng-template #form>
+    <form (ngSubmit)="validate()" [formGroup]="searchGroup">
+      <input type="text" formControlName="city" placeholder="Search city">
+    </form>
+  </ng-template>
+
+  <ng-template #placeholder></ng-template>
+</section>

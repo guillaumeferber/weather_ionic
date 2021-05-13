@@ -2,12 +2,17 @@ import { PositionError } from "@ionic-native/geolocation/ngx";
 import { createAction, props } from "@ngrx/store";
 import { CurrentObs } from "src/app/core/models/currentObs.model";
 import { ForecastDay } from "src/app/core/models/Forecast.model";
+import { Query } from "src/app/core/models/query.model";
 import { GeolocationCoordinates } from '../state/weather.state';
 
 const WEATHER_ACTIONS = {
   GET_GEOLOCATION: '[Weather] Get Geolocation',
   GET_GEOLOCATION_SUCCESS: '[Weather] Get Geolocation Success',
   GET_GEOLOCATION_ERROR: '[Weather] Get Geolocation Error',
+
+  GET_LOCATION: '[Weather] Get location',
+  GET_LOCATION_SUCCESS: '[Weather] Get location Success',
+  GET_LOCATION_ERROR: '[Weather] Get location Error',
 
   GET_CURRENT_WEATHER: '[Weather] Get Current Weather',
   GET_CURRENT_WEATHER_SUCCESS: '[Weather] Get Current Weather Success',
@@ -22,6 +27,21 @@ const WEATHER_ACTIONS = {
 
 export const getGeoLocation = createAction(
   WEATHER_ACTIONS.GET_GEOLOCATION
+);
+
+export const getLocation = createAction(
+  WEATHER_ACTIONS.GET_LOCATION,
+  props<{query: Query}>()
+);
+
+export const getLocationSuccess = createAction(
+  WEATHER_ACTIONS.GET_LOCATION_SUCCESS,
+  props<{location: CurrentObs[]}>()
+);
+
+export const getLocationError = createAction(
+  WEATHER_ACTIONS.GET_LOCATION_ERROR,
+  props<{error: string}>()
 );
 
 export const getGeoLocationSuccess = createAction(
@@ -47,7 +67,6 @@ export const getCurrentWeatherError = createAction(
   WEATHER_ACTIONS.GET_CURRENT_WEATHER_ERROR,
   props<{error: string}>()
 );
-
 
 export const getForecastDaily = createAction(
   WEATHER_ACTIONS.GET_CURRENT_FORECAST

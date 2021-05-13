@@ -12,7 +12,8 @@ export interface WeatherAppState {
   currentWeather: CurrentObs;
   forecastDaily: ForecastDay;
   selectedForecastDaily: Forecast;
-  error: PositionError;
+  locations: any[];
+  error: PositionError | string;
   loading: boolean;
 }
 export interface AppState {

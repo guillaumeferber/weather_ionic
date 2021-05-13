@@ -9,13 +9,13 @@ import { OpenWeatherMapAPIService } from 'src/app/core/services/open-weather-map
   styleUrls: ['location.page.scss']
 })
 export class LocationPage {
-  public weatherData: CurrentObs[];
+  public weatherData: CurrentObs[][] = [];
   constructor(private weatherService: OpenWeatherMapAPIService) {}
 
   getCurrentWeather = (query: Query) => {
     this.weatherService.getCurrentWeather(query)
       .subscribe((result: CurrentObs[]) => {
-        this.weatherData = result;
+        this.weatherData.push(result);
     })
   }
 }

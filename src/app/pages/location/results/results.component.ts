@@ -7,10 +7,11 @@ import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle }
   styleUrls: ['./results.component.scss']
 })
 export class ResultsComponent implements OnInit {
-  @Input() results: CurrentObs[];
+  @Input() results: CurrentObs[][];
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }
