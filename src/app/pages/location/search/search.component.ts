@@ -1,25 +1,22 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
-import { Query } from 'src/app/core/models/query.model';
-
+import { AppState } from 'src/app/store/state/weather.state';
+import * as WeatherActions from 'src/app/store/actions/weather.actions';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent {
   viewForm: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  @Output() searchValidated: EventEmitter<Query> = new EventEmitter();
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private store: Store<AppState>) { }
   searchGroup = this.fb.group({
     city: ['']
   });
-  ngOnInit() {
-  }
-
   validate = () => {
-    this.searchValidated.emit(this.searchGroup.value);
+    this.store.dispatch(WeatherActions.getLocation({query: this.searchGroup.value}))
   }
 
   addCity() {

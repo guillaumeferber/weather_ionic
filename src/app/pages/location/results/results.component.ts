@@ -1,14 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CurrentObs } from 'src/app/core/models/currentObs.model';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/angular';
+import { AppState } from 'src/app/store/state/weather.state';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as WeatherSelectors from 'src/app/store/selectors/weather.selectors';
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.scss']
 })
 export class ResultsComponent implements OnInit {
-  @Input() results: CurrentObs[][];
-  constructor() { }
+  locations$: Observable<CurrentObs[][]> = this.store.select(WeatherSelectors.selectLocations);
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
 

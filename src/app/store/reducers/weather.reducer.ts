@@ -22,7 +22,7 @@ const getGeoLocation = (state: WeatherAppState) => ({
 
 const getLocationSuccess = (state: WeatherAppState, location: CurrentObs[]) => ({
   ...state,
-  locations: [...state.locations, location]
+  locations: [...state.locations, ...location]
 });
 
 const getLocationError = (state: WeatherAppState, error: string) => ({

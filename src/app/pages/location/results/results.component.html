@@ -1,6 +1,6 @@
-<ng-container *ngIf="results;then hasResults else placeholder"></ng-container>
+<ng-container *ngIf="locations$ | async;then hasResults else placeholder"></ng-container>
 <ng-template #hasResults>
-  <ng-container *ngFor="let result of results">
+  <ng-container *ngFor="let result of locations$ | async">
     <ion-card>
 
       <ion-card-header>
