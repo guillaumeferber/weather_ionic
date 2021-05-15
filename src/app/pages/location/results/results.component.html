@@ -1,19 +1,22 @@
 <ng-container *ngIf="locations$ | async;then hasResults else placeholder"></ng-container>
 <ng-template #hasResults>
-  <ng-container *ngFor="let result of locations$ | async">
-    <ion-card>
+  <article class="u-m-t-md u-m-b-md c-card-container u-d-flex u-flex-row u-justify-content-center u-flex-wrap u-flex-row-stretch">
+    <ng-container *ngFor="let result of locations$ | async">
+      <ion-card class="c-card">
 
-      <ion-card-header>
-        {{result.city_name}}
-      </ion-card-header>
+        <ion-card-header>
+          <h2>{{result.temp}}&deg;C</h2>
+        </ion-card-header>
 
-      <ion-card-content>
-        Temp. {{result.temp}}&deg;C
-        <!-- Add card content here! -->
-      </ion-card-content>
+        <ion-card-content class="u-d-flex u-flex-column">
+          <h4><b>{{result.city_name}}</b></h4>
+          <span>{{countries.getCountryName(result.country_code)}}</span>
+          <!-- Add card content here! -->
+        </ion-card-content>
 
-    </ion-card>
-  </ng-container>
+      </ion-card>
+    </ng-container>
+  </article>
 </ng-template>
 <ng-template #placeholder>
 

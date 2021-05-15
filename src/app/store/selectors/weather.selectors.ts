@@ -31,5 +31,5 @@ export const selectSelectedForecastDay = createSelector(
 
 export const selectLocations = createSelector(
   (state: AppState) => state.weather.locations,
-  (locations: CurrentObs[][]) => locations
+  (locations: CurrentObs[]) => locations
 );

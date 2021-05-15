@@ -3,7 +3,7 @@
 <ng-container [ngTemplateOutlet]="(viewForm | async) ? form : placeholder"></ng-container>
   <ng-template #form>
     <form (ngSubmit)="validate()" [formGroup]="searchGroup">
-      <input type="text" formControlName="city" placeholder="Search city">
+      <input type="text" formControlName="city" placeholder="Search city" (focus)="searchGroup.value.city = ''">
     </form>
   </ng-template>
 
