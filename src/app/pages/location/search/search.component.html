@@ -1,9 +1,10 @@
 <section class="u-p-sm">
-<ion-button expand="full" (click)="addCity()">Add a city<ion-icon slot="end" name="add"></ion-icon></ion-button>
-<ng-container [ngTemplateOutlet]="(viewForm | async) ? form : placeholder"></ng-container>
+<button type="button" class="u-w-100 c-button c-button--transparent u-d-flex u-justify-content-between u-align-items-center" (click)="addCity()"><span class="u-m-l-0-auto u-d-block">Add a city</span><ion-icon class="u-align-self-end" slot="end" name="add"></ion-icon></button>
+<!--<ng-container [ngTemplateOutlet]="(viewForm | async) ? form : placeholder"></ng-container>-->
+<ng-container [ngTemplateOutlet]="form"></ng-container>
   <ng-template #form>
     <form (ngSubmit)="validate()" [formGroup]="searchGroup">
-      <input type="text" formControlName="city" placeholder="Search city" (focus)="searchGroup.value.city = ''">
+      <input type="text" formControlName="city" placeholder="Search city">
     </form>
   </ng-template>
 

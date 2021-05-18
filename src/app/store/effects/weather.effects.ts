@@ -41,7 +41,7 @@ export class WeatherEffects {
                 lon: resp.coords.longitude
               } as Query)
                 .pipe(
-                  tap((resp: CurrentObs[]) => this.localStorageService.insertItem('weather', {...resp[0],id: this.guidService.uuidv4()} as LocalStorageItem)),
+                  tap((resp: CurrentObs[]) => this.localStorageService.insertItem('weather', {...resp[0], id: this.guidService.uuidv4()} as LocalStorageItem)),
                   map((observer: CurrentObs[]) => WeatherActions.getCurrentWeatherSuccess({ value: observer[0] })));
             }),
             catchError((error: PositionError) => of(WeatherActions.getGeoLocationError({ error })))
@@ -74,15 +74,56 @@ export class WeatherEffects {
 
   getLocation$ = createEffect(() => this.actions$.pipe(
     ofType(WeatherActions.getLocation),
-    switchMap((action: { query: Query }) => {
-      return this.weatherService.getCurrentWeather(action.query)
+    switchMap((action: { query?: Query }) => {
+      const currentLocations = this.localStorageService.getItemPlain('locations') as LocalStorageItem[];
+      if (currentLocations.length) {
+        currentLocations.map((currentLocation: LocalStorageItem) => {
+          currentLocation.values.map((value: CurrentObs) => {
+            return this.weatherService.getCurrentWeather({'city': `${value.city_name}, ${value.country_code}`} as Query)
+            .pipe(
+              tap((result: CurrentObs[]) => this.storeInLocationStorage(result)),
+              map((result: CurrentObs[]) => WeatherActions.getLocationSuccess({ location: result })),
+              catchError((error: string) => of(WeatherActions.getLocationError({ error })))
+              );
+            });
+          });
+      } else {
+        return this.weatherService.getCurrentWeather(action.query)
         .pipe(
+          tap((result: CurrentObs[]) => this.storeInLocationStorage(result)),
           map((result: CurrentObs[]) => WeatherActions.getLocationSuccess({ location: result })),
           catchError((error: string) => of(WeatherActions.getLocationError({ error })))
-      )
-    }),
+        );
+      }
+      }),
     catchError((error: string) => of(WeatherActions.getLocationError({ error })))
   ));
+
+
+  storeInLocationStorage = (result: CurrentObs[]): void => {
+    let updatedCurrentLocations: LocalStorageItem;
+    const currentLocations = this.localStorageService.getItemPlain('locations') as LocalStorageItem;
+    if (!currentLocations) {
+      updatedCurrentLocations = {
+        values: [...result],
+        id: this.guidService.uuidv4()
+      }
+    } else {
+      const newValues = currentLocations.values as CurrentObs[];
+      const newResult = result[0] as CurrentObs;
+      const index = newValues.findIndex(item => item.city_name === newResult.city_name);
+      if (index > -1) {
+        newValues[index] = newResult;
+      } else {
+        newValues.push(newResult);
+      }
+      updatedCurrentLocations = {
+        ...currentLocations,
+        values: newValues
+      } as LocalStorageItem;
+    }
+    this.localStorageService.insertItem('locations', updatedCurrentLocations);
+  }
 
   constructor(
     private store: Store<AppState>,

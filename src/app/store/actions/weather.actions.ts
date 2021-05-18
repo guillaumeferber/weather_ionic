@@ -31,7 +31,7 @@ export const getGeoLocation = createAction(
 
 export const getLocation = createAction(
   WEATHER_ACTIONS.GET_LOCATION,
-  props<{query: Query}>()
+  props<{query?: Query}>()
 );
 
 export const getLocationSuccess = createAction(
