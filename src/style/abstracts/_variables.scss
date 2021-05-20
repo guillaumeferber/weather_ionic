@@ -3,10 +3,21 @@
 	--sans-serif: Helvetica Neue, sans-serif;
 	--section-width: 60em;
 	--margin-regular: 8rem;
-
-  --theme-background: royalblue;
+  --border-radius: 40px;
+  --text-muted: rgba(0, 0, 0, 0.5);
+  --svg-dimension: 32px;
 
   --theme-grey: linear-gradient(to bottom, #CFD8E0, #6F7892, #3d4159);
   --theme-orange: linear-gradient(to bottom, #EBC769, #EC9011, #ED7201);
-  --theme-blue: linear-gradient(to bottom, #3D5CAB, #354799);
+  --theme-blue: linear-gradient(to bottom, #4782C9, #2F52A5, #354799);
+
+  --theme-color-primary: #354799;
+  --theme-color-secondary: #2F52A5;
+  --theme-color-tertiary: #4782C9;
+
+  --theme-color-orange-primary: #ED7201;
+  --theme-color-orange-secondary: #EC9111;
+  --theme-color-orange-tertiary: #ECB426;
+
+  --theme-background: var(--theme-color-primary);
 }

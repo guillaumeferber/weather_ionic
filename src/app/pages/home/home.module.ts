@@ -8,6 +8,7 @@ import { ExploreContainerComponentModule } from '../../explore-container/explore
 import { HomePageRoutingModule } from './home-routing.module';
 import { HeaderModule } from './header/header.module';
 import { InformationModule } from './information/information.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { InformationModule } from './information/information.module';
     HomePageRoutingModule,
     HeaderModule,
     InformationModule,
+    SharedModule
   ],
   declarations: [HomePage]
 })

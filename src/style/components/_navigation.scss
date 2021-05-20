@@ -1,0 +1,33 @@
+.c-navigation {
+  --padding-size: 30px;
+  position: absolute;
+  bottom: 0;
+  left: var(--padding-size);
+  right: var(--padding-size);
+  margin: 0 auto 40px;
+  background: #fff;
+  padding: var(--padding-size) 0;
+  border-radius: var(--border-radius);
+
+  ul {
+      display: flex;
+      list-style-type: none;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 18px;
+      padding: 0;
+      ;
+
+      li {
+          a {
+              color: var(--text-muted);
+          }
+
+          svg {
+              fill: var(--text-muted);
+              height: var(--svg-dimension);
+              width: var(--svg-dimension);
+          }
+      }
+  }
+}
