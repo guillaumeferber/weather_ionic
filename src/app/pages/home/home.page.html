@@ -1,5 +1,6 @@
-<ion-content [fullscreen]="true" class="u-background" [dynamicClassName]="(weatherData$ | async)?.weather?.code.toString()">
+<ion-content [fullscreen]="true" class="u-background" [dynamicClassName]="(weatherData$ | async)?.weather?.code.toString() ">
   <app-explore-container>
+    {{isAtNight$ | async}}
     <p class="u-text-center u-text-danger" *ngIf="selectError$ | async">{{(selectError$ | async)?.message}}</p>
     <div class="u-d-flex u-flex-column u-align-items-stretch" >
       <app-home-header></app-home-header>

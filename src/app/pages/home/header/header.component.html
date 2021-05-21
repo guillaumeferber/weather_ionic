@@ -1,14 +1,15 @@
   <div class="u-position-relative">
     <div class="u-d-flex u-justify-content-between u-p-sm u-flex-row-stretch">
-      <app-header [title]="(weatherData$ | async)?.city_name" [subtitle]="dateTime | date: 'mediumDate'" class="u-p-b-50vh"></app-header>
+      <app-header [title]="(weatherData$ | async)?.city_name" [subtitle]="dateTime | date: 'mediumDate'" class=""></app-header>
       <aside>
-        <h1 class="u-m-r-0 u-text-vertical">{{(weatherData$ | async)?.weather?.description}}</h1>
+        <h1 class="u-m-r-0 u-text-center">{{(weatherData$ | async)?.weather?.description}}</h1>
       </aside>
     </div>
     <main>
-      <h1>
+      <h1 class="u-d-flex u-d-flex-column u-text-center">
+        <span class="c-header__icon" [ngStyle]="{'background-image': 'url(' + (weatherIconStyle$ | async) + ')'}"></span>
         <ng-container *ngIf="(weatherData$ | async)">
-          {{(weatherData$ | async).temp}}&deg;C
+          <span>{{(weatherData$ | async).temp}}&deg;C</span>
         </ng-container>
       </h1>
     </main>

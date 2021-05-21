@@ -9,6 +9,6 @@ import { Directive, Input } from '@angular/core';
 export class DynamicClassNameDirective {
   @Input('dynamicClassName') classNames: string;
 
-  convertClassNames = () => this.classNames.split(' ').map((className: string) => `_${className}`).join(' ');
+  convertClassNames = () => this.classNames && this.classNames.split(' ').map((className: string) => `_${className}`).join(' ');
 
 }
