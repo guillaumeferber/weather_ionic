@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
 import { HomePageRoutingModule } from './home-routing.module';
-import { HeaderModule } from './header/header.module';
+import { HomeHeaderModule } from './header/header.module';
 import { InformationModule } from './information/information.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -17,7 +17,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     ExploreContainerComponentModule,
     HomePageRoutingModule,
-    HeaderModule,
+    HomeHeaderModule,
     InformationModule,
     SharedModule
   ],

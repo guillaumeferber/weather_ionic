@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ForecastListComponent } from './forecast-list.component';
 import { IonicModule } from '@ionic/angular';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { HomeHeaderModule } from '../../home/header/header.module';
 
 
 
@@ -13,7 +14,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     IonicModule,
     CommonModule,
-    SharedModule
+    SharedModule,
+    HomeHeaderModule
   ],
   exports: [ ForecastListComponent ]
 })

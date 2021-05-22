@@ -1,4 +1,4 @@
 <header [ngClass]="[class || '']">
-  <h2>{{subtitle}}</h2>
-  <h3 class="h2">{{title}}</h3>
+  <h2 *ngIf="subtitle">{{subtitle}}</h2>
+  <h1 *ngIf="title" class="u-text-center">{{title}}</h1>
 </header>

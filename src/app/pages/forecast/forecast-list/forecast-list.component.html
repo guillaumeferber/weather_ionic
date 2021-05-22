@@ -1,5 +1,5 @@
 <section class="u-p-sm">
-  <app-header [title]="(selectCurrentWeather$ | async)?.city_name" [subtitle]="dateTime | date: 'mediumDate'"></app-header>
+  <app-home-header direction="row"></app-home-header>
   <div class="c-container u-d-flex u-align-items-stretch u-flex-nowrap u-justify-content-between gap-1">
     <ng-container *ngFor="let item of (selectCurrentForecastDaily$ | async)?.data; index as i">
       <ion-card class="u-w-35 c-card u-shadow--soft" (click)="select(i)" [ngClass]="{'active': activeIndex === i}">

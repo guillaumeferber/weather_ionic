@@ -1,23 +1,35 @@
+:host {
+  height: 60vh;
+}
+
 aside h1 {
   font-size: 2.6rem;
   font-weight: 900;
 }
 main {
-  margin: 0 auto;
+  margin: 3.5rem auto 0;
   text-align: center;
   h1 {
+    --title-font-size: 4rem;
+    font-size: var(--title-font-size);
+
     background: -webkit-linear-gradient(#fff, transparent);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-top: 50px;
-    font-size: 100px;
+  }
+  &.u-flex-column h1 {
+    --title-font-size: 7rem;
   }
 }
 
 .c-header__icon {
-  height: 8rem;
-  width: 8rem;
+  --dimensions: 6rem;
+  height: var(--dimensions);
+  width: var(--dimensions);
+  .u-flex-column & {
+    --dimensions: 8rem;
+  }
   display: flex;
   background-repeat:no-repeat;
   background-size:contain;

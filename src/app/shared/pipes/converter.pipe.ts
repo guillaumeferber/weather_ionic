@@ -13,9 +13,9 @@ export class ConvertPipe implements PipeTransform {
   private metersPerSecondTo(value: number, from: string, to: string): string {
     if (from === 'mps') {
       if (to === 'kmh') {
-        return value * 3.6 + ' km/h';
+        return Math.round(value * 3.6) + ' km/h';
       }
     }
-    return value + ' km/h';
+    return Math.round(value) + ' km/h';
   }
 }

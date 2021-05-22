@@ -2,9 +2,10 @@
 
   h#{$i},
   .h#{$i} {
-    font-family: var(--sans-serif);
+    font-family: var(--font-family-sans-serif);
     line-height: 1.2;
     font-weight: 700;
+    font-size: 2.6/$i + 1rem;
   }
 }
 

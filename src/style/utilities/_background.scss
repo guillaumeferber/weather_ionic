@@ -1,6 +1,8 @@
 .u-background {
   background: var(--background);
+  &._802,
   &._804 {
     --background: var(--theme-blue);
   }
+
 }
