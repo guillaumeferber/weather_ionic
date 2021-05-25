@@ -1,20 +1,24 @@
 <section class="u-p-sm">
   <app-home-header direction="row"></app-home-header>
-  <div class="c-container u-d-flex u-align-items-stretch u-flex-nowrap u-justify-content-between gap-1">
-    <ng-container *ngFor="let item of (selectCurrentForecastDaily$ | async)?.data; index as i">
-      <ion-card class="u-w-35 c-card u-shadow--soft" (click)="select(i)" [ngClass]="{'active': activeIndex === i}">
-        <ion-card-header>
-          <ion-card-title>{{item.datetime | date:'EEEE dd'}}</ion-card-title>
-          <ion-card-subtitle>{{item.precip | percent}}</ion-card-subtitle>
-        </ion-card-header>
-
-        <ion-card-content>
-          <div class="u-d-flex u-flex-column u-jutify-content-center">
-            <div><b>{{item.max_temp}}&deg;C</b></div>
-            <div><b>{{item.min_temp}}&deg;C</b></div>
+  <aside>
+    <h3>Forecast</h3>
+    <ul>
+      <ng-container *ngFor="let item of (selectCurrentForecastDaily$ | async)?.data; index as i">
+        <li [ngClass]="{ active: activeIndex === i }">
+          <div>
+            <h5>{{ item?.datetime | date: "EEEE" }}</h5>
+            <span>{{ item?.datetime | date: "MMMM d" }}</span>
           </div>
-        </ion-card-content>
-      </ion-card>
-    </ng-container>
-  </div>
+          <div class="forecast__icon-container">
+            <span class="c-weather-icon" [ngStyle]="{ 'background-image': 'url(' + getWeatherIcon(item) + ')' }"></span>
+            <span *ngIf="item?.precip > 0">{{ item?.precip | percent }}</span>
+          </div>
+          <div class="forecast__info-container">
+            <span>{{ item?.max_temp| number: "2.0-0" }}&deg;</span>
+            <span>{{ item?.min_temp| number: "2.0-0" }}&deg;</span>
+          </div>
+        </li>
+      </ng-container>
+    </ul>
+  </aside>
 </section>

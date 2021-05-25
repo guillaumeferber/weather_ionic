@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="u-background" [dynamicClassName]="(weatherData$ | async)?.weather?.code.toString() ">
   <app-explore-container>
     <app-forecast-list></app-forecast-list>
     <app-forecast-information></app-forecast-information>

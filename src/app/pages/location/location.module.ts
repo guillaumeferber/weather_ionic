@@ -1,5 +1,4 @@
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +8,7 @@ import { ExploreContainerComponentModule } from '../../explore-container/explore
 import { LocationPageRoutingModule } from './location-routing.module';
 import { SearchModule } from './search/search.module';
 import { ResultsModule } from './results/results.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -18,7 +18,8 @@ import { ResultsModule } from './results/results.module';
     ExploreContainerComponentModule,
     LocationPageRoutingModule,
     SearchModule,
-    ResultsModule
+    ResultsModule,
+    SharedModule
   ],
   declarations: [LocationPage]
 })

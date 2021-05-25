@@ -19,19 +19,19 @@ main {
     -webkit-text-fill-color: transparent;
   }
   &.u-flex-column h1 {
-    --title-font-size: 7rem;
+    --title-font-size: 8rem;
   }
 }
 
-.c-header__icon {
-  --dimensions: 6rem;
-  height: var(--dimensions);
-  width: var(--dimensions);
-  .u-flex-column & {
-    --dimensions: 8rem;
+.row {
+  & > main {
+    margin-top: 0;
+    margin-bottom: 2rem;
   }
-  display: flex;
-  background-repeat:no-repeat;
-  background-size:contain;
-  background-position:center center;
+  & > div {
+    padding: 1rem;
+    h1 {
+      font-size: 2.6rem;
+    }
+  }
 }
