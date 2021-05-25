@@ -4,18 +4,23 @@
       <ion-slide class="u-d-flex u-justify-content-around u-align-items-center">
         <ul>
           <li><span>feels like</span><span>{{(weatherData$ | async)?.app_temp}}&deg;C</span></li>
-          <li><span>precipation</span><span>{{(weatherData$ | async)?.precip}}%</span></li>
+          <li><span>precipation</span><span>{{(weatherData$ | async)?.precip}} mm/hr</span></li>
 
         </ul>
         <ul>
-          <li><span>wind speed</span><span>{{(weatherData$ | async)?.wind_cdir}} {{(weatherData$ | async)?.wind_spd | convert: ['mps', 'kmh'] }}</span></li>
+          <li><span>wind speed</span><span>{{(weatherData$ | async)?.wind_cdir}}
+              {{(weatherData$ | async)?.wind_spd | convert: ['mps', 'kmh'] }}</span></li>
           <li><span>uv index</span><span>{{(weatherData$ | async)?.uv | number:'1.0-1'}}</span></li>
         </ul>
       </ion-slide>
       <ion-slide class="u-d-flex u-justify-content-around u-align-items-center">
         <ul>
-          <li><span>sunrise</span><span>{{(weatherData$ | async)?.sunrise }}</span></li>
-          <li><span>sunset</span><span>{{(weatherData$ | async)?.sunset }}</span></li>
+          <li>
+            <span>sunrise</span><span>{{(sunTime$ | async)?.sunrise.hour }}:{{(sunTime$ | async)?.sunrise.minutes }}</span>
+          </li>
+          <li>
+            <span>sunset</span><span>{{(sunTime$ | async)?.sunset.hour }}:{{(sunTime$ | async)?.sunset.minutes }}</span>
+          </li>
         </ul>
         <ul>
           <li><span>humidity</span><span>{{(weatherData$ | async)?.rh | number:'2.0-1'}}%</span></li>

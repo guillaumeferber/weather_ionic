@@ -17,6 +17,7 @@ export class OpenWeatherMapAPIService {
     Object.keys(query).map(key => {
       params = params.append(key, query[key]);
     });
+    // params = params.append('include', 'minutely');
     return this.httpClient.get<CurrentObsGroup>(`${environment.api[environment.api.default].baseUrl}current`, { params }).pipe(map(results => results.data));
   }
 

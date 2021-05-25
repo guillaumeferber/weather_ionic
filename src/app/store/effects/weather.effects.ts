@@ -1,4 +1,3 @@
-import { getLocation } from './../actions/weather.actions';
 import { Injectable } from '@angular/core';
 import { Geoposition, PositionError } from '@ionic-native/geolocation/ngx';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
@@ -16,6 +15,7 @@ import { OpenWeatherMapAPIService } from 'src/app/core/services/open-weather-map
 import * as WeatherActions from '../actions/weather.actions';
 import * as WeatherSelectors from '../selectors/weather.selectors';
 import { AppState, GeolocationCoordinates } from '../state/weather.state';
+import { BUSINESS } from 'src/app/core/constants/business.constants';
 @Injectable()
 export class WeatherEffects {
 
@@ -24,7 +24,7 @@ export class WeatherEffects {
       ofType(WeatherActions.getGeoLocation),
       switchMap(() => {
         const localItem = this.localStorageService.getItemPlain('weather') as CurrentObs[];
-        if (localItem && localItem.length && Math.floor(Date.now() / 1000) < (localItem[0].ts + (3600 * 6))) {
+        if (localItem && localItem.length && Math.floor(Date.now() / 1000) < (localItem[0].ts + BUSINESS.DEFAULT_TIMEOUT_REQUEST)) {
           return [WeatherActions.getCurrentWeatherSuccess({ value: localItem[0] })];
         }
         return this.locationService.getCurrentPosition()
@@ -58,7 +58,7 @@ export class WeatherEffects {
       let _resp = resp as GeolocationCoordinates;
       if (!_resp) {
         const localItem = this.localStorageService.getItemPlain('weather') as CurrentObs[];
-        if (localItem && localItem.length && Math.floor(Date.now() / 1000) < (localItem[0].ts + (3600 * 6))) {
+        if (localItem && localItem.length && Math.floor(Date.now() / 1000) < (localItem[0].ts + BUSINESS.DEFAULT_TIMEOUT_REQUEST)) {
           _resp = { latitude: localItem[0].lat, longitude: localItem[0].lon };
         }
       }

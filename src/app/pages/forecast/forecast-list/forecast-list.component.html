@@ -11,7 +11,10 @@
           </div>
           <div class="forecast__icon-container">
             <span class="c-weather-icon" [ngStyle]="{ 'background-image': 'url(' + getWeatherIcon(item) + ')' }"></span>
-            <span *ngIf="item?.precip > 0">{{ item?.precip | percent }}</span>
+            <span *ngIf="item?.precip > 1" class="u-d-flex u-flex-column">
+              <span>{{ item?.precip }}</span>
+              <small>mm/hr</small>
+            </span>
           </div>
           <div class="forecast__info-container">
             <span>{{ item?.max_temp| number: "2.0-0" }}&deg;</span>
