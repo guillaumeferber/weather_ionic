@@ -6,9 +6,9 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     @each $side in $sides {
         .u-m-#{str-slice($side, 0, 1)}-#{$space} {
             @if $amount != 0 {
-                margin-#{$side}: #{$amount}rem;
+                margin-#{$side}: #{$amount}rem !important;
             } @else {
-                margin-#{$side}: #{$amount};
+                margin-#{$side}: #{$amount} !important;
             }
         }
 

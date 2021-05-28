@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PipesModule } from './pipes/pipes.module';
 import { HeaderModule } from './components/header/header.module';
 import { DirectivesModule } from './directives/directives.module';
+import { BadgeModule } from './components/badge/badge.module';
 
 
 
@@ -11,12 +12,14 @@ import { DirectivesModule } from './directives/directives.module';
     CommonModule,
     PipesModule,
     HeaderModule,
-    DirectivesModule
+    DirectivesModule,
+    BadgeModule
   ],
   exports: [
     PipesModule,
     HeaderModule,
-    DirectivesModule
+    DirectivesModule,
+    BadgeModule
   ]
 })
 export class SharedModule { }

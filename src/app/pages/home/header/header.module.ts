@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeHeaderComponent } from './header.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { BackgroundModule } from '../background/background.module';
 
 
 
@@ -13,7 +12,6 @@ import { BackgroundModule } from '../background/background.module';
   imports: [
     CommonModule,
     SharedModule,
-    BackgroundModule
   ],
   exports: [HomeHeaderComponent]
 })
