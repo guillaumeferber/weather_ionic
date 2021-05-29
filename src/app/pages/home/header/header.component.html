@@ -3,7 +3,8 @@
     <app-header [title]="(weatherData$ | async)?.city_name" [className]="direction !== 'column' ? 'row' : ''">
     </app-header>
     <p class="u-mx-0-auto u-m-t-sm">
-      <app-badge>{{(weatherData$ | async)?.weather?.description}}</app-badge>
+      <app-badge *ngIf="(weatherData$ | async)?.weather?.description">{{(weatherData$ | async)?.weather?.description}}
+      </app-badge>
     </p>
   </div>
   <main class="u-d-flex u-align-items-center" [ngClass]="[direction === 'column' ? 'u-flex-column' : 'row']">

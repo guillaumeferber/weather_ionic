@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CurrentObs } from 'src/app/core/models/currentObs.model';
 import { AppState } from 'src/app/store/state/weather.state';
 import * as WeatherSelectors from 'src/app/store/selectors/weather.selectors';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-information',
   templateUrl: './information.component.html',
   styleUrls: ['./information.component.scss']
 })
-export class InformationComponent {
+export class InformationComponent implements OnInit {
   public readonly weatherData$: Observable<CurrentObs> = this.store.pipe(select(WeatherSelectors.selectCurrentWeather));
-  sunTime$ = this.weatherData$.pipe(map((value: CurrentObs) => this.getSunTime(value.sunset, value.sunrise)));
+  public sunTime$;
   slideOpts = {
     initialSlide: 0,
     speed: 400
@@ -21,6 +21,11 @@ export class InformationComponent {
   constructor(
     private store: Store<AppState>) { }
 
+  ngOnInit() {
+    this.sunTime$ = this.weatherData$.pipe(
+      filter(value => !!value),
+      map((value: CurrentObs) => this.getSunTime(value.sunset, value.sunrise)));
+  }
   getSunTime(sunset: string, sunrise: string) {
     const sunsetDate = sunset.split(':');
     const sunriseDate = sunrise.split(':');

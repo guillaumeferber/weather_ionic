@@ -31,5 +31,14 @@ export const selectSelectedForecastDay = createSelector(
 
 export const selectLocations = createSelector(
   (state: AppState) => state.weather.locations,
-  (locations: CurrentObs[]) => locations
+  (locations: CurrentObs[]) => {
+    const locs = localStorage.getItem('locations');
+    if (locs) {
+      const parsedLocs = JSON.parse(locs);
+      if (parsedLocs?.length) {
+        return locations.length ? [...parsedLocs[0].values, locations] : parsedLocs[0].values;
+      }
+    }
+    return locations;
+  }
 );

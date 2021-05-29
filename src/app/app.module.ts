@@ -11,6 +11,7 @@ import { HttpRequestInterceptor } from './core/interceptors/http-request.interce
 import { SharedModule } from './shared/shared.module';
 import { AppStoreModule } from './store/store.module';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     Geolocation
   ],
   bootstrap: [AppComponent],

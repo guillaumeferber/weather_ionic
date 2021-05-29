@@ -9,11 +9,7 @@ export interface LocalStorageItem {
 export class LocalStorageService {
   constructor() { }
 
-  getItem = async (key: string) => {
-    return Promise.resolve().then(function () {
-      return JSON.parse(localStorage.getItem(key)) || null;
-  });
-  }
+  getItem = async (key: string) => await Promise.resolve().then(() => JSON.parse(localStorage.getItem(key)) || null);
 
   getItemPlain = (key: string) => {
     return JSON.parse(localStorage.getItem(key)) || null;
@@ -29,18 +25,9 @@ export class LocalStorageService {
     localStorage.removeItem(key);
   }
 
-   insertItem = async (key: string, value: LocalStorageItem) => {
-     const item = this.getItem(key);
-     item.then((localItem: LocalStorageItem[]) => {
-       const localObject = localItem as LocalStorageItem[] || [];
-       const index = localObject.findIndex((val: LocalStorageItem) => val.city_name === value.city_name);
-       if (index > -1) {
-        localObject[index] = value;
-       } else {
-        localObject.push(value);
-       }
-       this.setItem(key, localObject);
-     })
+  insertItem = async (key: string, value: LocalStorageItem | LocalStorageItem[]) => {
+    this.delete(key);
+    this.setItem(key, value);
   }
 
   clear = async () => {

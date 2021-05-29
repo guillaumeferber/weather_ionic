@@ -12,17 +12,15 @@ export class SearchComponent implements OnInit {
   @ViewChild('input') input: ElementRef;
   constructor(private fb: FormBuilder, private store: Store<AppState>) { }
   @HostListener('document:keyup.enter') onKeyUp() {
-    console.log(this.searchGroup.value);
-
     this.validate();
   }
   ngOnInit() {
-    this.store.dispatch(WeatherActions.getLocation({ query: null }));
+    // this.store.dispatch(WeatherActions.getLocation({ query: null }));
   }
   searchGroup = this.fb.group({
     city: ['']
   });
-  private validate = () => {
+  private validate = (): void => {
     this.searchGroup.value && this.store.dispatch(WeatherActions.getLocation({ query: this.searchGroup.value }));
   }
 
