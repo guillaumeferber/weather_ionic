@@ -16,6 +16,7 @@ import * as WeatherActions from '../actions/weather.actions';
 import * as WeatherSelectors from '../selectors/weather.selectors';
 import { AppState, GeolocationCoordinates } from '../state/weather.state';
 import { BUSINESS } from 'src/app/core/constants/business.constants';
+import { STORAGE } from 'src/app/core/constants/storage.constants';
 @Injectable()
 export class WeatherEffects {
 
@@ -23,9 +24,9 @@ export class WeatherEffects {
     return this.actions$.pipe(
       ofType(WeatherActions.getGeoLocation),
       switchMap(() => {
-        const localItem = this.localStorageService.getItemPlain('weather') as CurrentObs[];
-        if (localItem && localItem.length && Math.floor(Date.now() / 1000) < (localItem[0].ts + BUSINESS.DEFAULT_TIMEOUT_REQUEST)) {
-          return [WeatherActions.getCurrentWeatherSuccess({ value: localItem[0] })];
+        const localItem = this.localStorageService.getItemPlain(STORAGE.END_POINTS.WEATHER) as CurrentObs;
+        if (localItem && Math.floor(Date.now() / 1000) < (localItem.ts + BUSINESS.DEFAULT_TIMEOUT_REQUEST)) {
+          return [WeatherActions.getCurrentWeatherSuccess({ value: localItem })];
         }
         return this.locationService.getCurrentPosition()
           .pipe(
@@ -41,7 +42,7 @@ export class WeatherEffects {
                 lon: resp.coords.longitude
               } as Query)
                 .pipe(
-                  tap((resp: CurrentObs[]) => this.localStorageService.insertItem('weather', {...resp[0], id: this.guidService.uuidv4()} as LocalStorageItem)),
+                  tap((resp: CurrentObs[]) => this.localStorageService.insertItem(STORAGE.END_POINTS.WEATHER, {...resp[0], id: this.guidService.uuidv4()} as LocalStorageItem)),
                   map((observer: CurrentObs[]) => WeatherActions.getCurrentWeatherSuccess({ value: observer[0] })));
             }),
             catchError((error: PositionError) => of(WeatherActions.getGeoLocationError({ error })))
@@ -57,14 +58,14 @@ export class WeatherEffects {
       switchMap(([action, resp]: [TypedAction<string>, GeolocationCoordinates]) => {
         let _resp = resp as GeolocationCoordinates;
         if (!_resp) {
-          const localItem = this.localStorageService.getItemPlain('weather') as CurrentObs[];
+          const localItem = this.localStorageService.getItemPlain(STORAGE.END_POINTS.WEATHER) as CurrentObs[];
           if (localItem && localItem.length && Math.floor(Date.now() / 1000) < (localItem[0].ts + BUSINESS.DEFAULT_TIMEOUT_REQUEST)) {
             _resp = { latitude: localItem[0].lat, longitude: localItem[0].lon };
           }
         }
         return this.weatherService.getDailyForecast({ lat: _resp.latitude, lon: _resp.longitude } as Query)
           .pipe(
-            tap((forecast: ForecastDay) => this.localStorageService.insertItem('forecast', { ...forecast, id: this.guidService.uuidv4() } as LocalStorageItem)),
+            tap((forecast: ForecastDay) => this.localStorageService.insertItem(STORAGE.END_POINTS.FORECAST, { ...forecast, id: this.guidService.uuidv4() } as LocalStorageItem)),
             map((forecast: ForecastDay) => WeatherActions.getForecastDailySuccess({ forecast })),
             catchError((error: string) => of(WeatherActions.getForecastDailyError({ error })))
           )
@@ -83,13 +84,13 @@ export class WeatherEffects {
           catchError((error: string) => of(WeatherActions.getLocationError({ error })))
           );
       } else {
-        const currentLocationList = this.localStorageService.getItem('locations');
+        const currentLocationList = this.localStorageService.getItem(STORAGE.END_POINTS.LOCATIONS);
         currentLocationList.then((currentLocations: LocalStorageItem[]) => {
           return currentLocations.map((location: LocalStorageItem) => {
             return location.values.map((value: CurrentObs) => {
               return this.weatherService.getCurrentWeather({
                 lat: value.lat,
-                lon: value.lon
+                lon: value.lon,
               } as Query)
                 .pipe(
                   tap((result: CurrentObs[]) => this.storeInLocationStorage(result)),
@@ -101,16 +102,13 @@ export class WeatherEffects {
         }).catch((error) => console.warn(error));
       }
     }),
-    catchError((error: string) => {
-      console.warn(error);
-      return of(WeatherActions.getLocationError({ error }))
-    })
+    catchError((error: string) => of(WeatherActions.getLocationError({ error })))
   ));
 
 
   private _storeInLocationStorage = (result: CurrentObs[]): void => {
-    let updatedCurrentLocations: LocalStorageItem[];
-    const currentLocations = this.localStorageService.getItemPlain('locations') as LocalStorageItem[];
+    let updatedCurrentLocations: LocalStorageItem[] = [];
+    const currentLocations = this.localStorageService.getItemPlain(STORAGE.END_POINTS.LOCATIONS) as LocalStorageItem[];
     if (!currentLocations || !currentLocations.length) {
       updatedCurrentLocations.push({
         values: [...result],

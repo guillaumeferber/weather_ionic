@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import * as WeatherSelectors from 'src/app/store/selectors/weather.selectors';
 import * as WeatherActions from 'src/app/store/actions/weather.actions';
+import * as HydrateActions from 'src/app/store/actions/hydration.actions';
 import { Observable } from 'rxjs';
 import { CurrentObs } from 'src/app/core/models/currentObs.model';
 import { PositionError } from '@ionic-native/geolocation/ngx';
@@ -20,5 +21,6 @@ export class HomePage implements OnInit {
     private store: Store<AppState>) { }
   ngOnInit() {
     this.store.dispatch(WeatherActions.getGeoLocation());
+    this.store.dispatch(HydrateActions.hydrate());
   }
 }

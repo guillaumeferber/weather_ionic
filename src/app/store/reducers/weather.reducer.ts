@@ -4,6 +4,9 @@ import * as WeatherActions from '../actions/weather.actions';
 import { PositionError } from "@ionic-native/geolocation/ngx";
 import { CurrentObs } from "src/app/core/models/currentObs.model";
 import { ForecastDay } from "src/app/core/models/Forecast.model";
+import { of, timer } from "rxjs";
+import { filter } from "rxjs/operators";
+import { STORAGE } from "src/app/core/constants/storage.constants";
 
 const initialState: WeatherAppState = {
   currentGeoLocation: null,
@@ -20,10 +23,26 @@ const getGeoLocation = (state: WeatherAppState) => ({
   loading: true
 });
 
-const getLocationSuccess = (state: WeatherAppState, location: CurrentObs[]) => ({
-  ...state,
-  locations: [...state.locations, ...location]
-});
+const getLocationSuccess = (state: WeatherAppState, location: CurrentObs[]) => {
+  let udpatedLocations = [...state.locations, ...location] as CurrentObs[];
+  const localLocations = localStorage.getItem(STORAGE.END_POINTS.LOCATIONS);
+  console.log(localLocations);
+
+  if (!localLocations) {
+    return {
+      ...state,
+      locations: udpatedLocations
+    }
+  }
+  const parsedLocs = JSON.parse(localLocations);
+  if (parsedLocs?.length) {
+    udpatedLocations = [...parsedLocs[0].values, location];
+  }
+  return {
+    ...state,
+    locations: udpatedLocations
+  }
+};
 
 const getLocationError = (state: WeatherAppState, error: string) => ({
   ...state,
