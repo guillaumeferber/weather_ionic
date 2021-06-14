@@ -7,6 +7,7 @@ import * as HydrateActions from 'src/app/store/actions/hydration.actions';
 import { Observable } from 'rxjs';
 import { CurrentObs } from 'src/app/core/models/currentObs.model';
 import { PositionError } from '@ionic-native/geolocation/ngx';
+import { ActivatedRoute, ParamMap, Params } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,9 +19,14 @@ export class HomePage implements OnInit {
   selectCurrentGeoLocation$: Observable<GeolocationCoordinates> = this.store.pipe(select(WeatherSelectors.selectCurrentGeoLocation));
 
   constructor(
+    private route: ActivatedRoute,
     private store: Store<AppState>) { }
   ngOnInit() {
-    this.store.dispatch(WeatherActions.getGeoLocation());
-    this.store.dispatch(HydrateActions.hydrate());
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      if (!params.get('location')) {
+        this.store.dispatch(WeatherActions.getGeoLocation());
+        this.store.dispatch(HydrateActions.hydrate());
+      }
+    });
   }
 }

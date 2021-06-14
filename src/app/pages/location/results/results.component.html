@@ -2,17 +2,18 @@
 <ng-container *ngIf="locations$ | async;then hasResults else placeholder"></ng-container>
 <ng-template #hasResults>
   <article class="u-m-t-0 c-card-container">
-    <ng-container *ngFor="let result of locations$ | async">
-      <ion-card class="c-card">
+    <ng-container *ngFor="let location of locations$ | async">
+      <ion-card class="c-card" (click)="selectLocation(location)">
 
         <ion-card-header class="c-card__header">
-          <h2>{{result.temp | number:'1.0-0'}}&deg;C</h2>
-          <span class="c-weather-icon" [ngStyle]="{ 'background-image': 'url(' + getWeatherIcon(result) + ')' }"></span>
+          <h2>{{location.temp | number:'1.0-0'}}&deg;C</h2>
+          <span class="c-weather-icon"
+            [ngStyle]="{ 'background-image': 'url(' + getWeatherIcon(location) + ')' }"></span>
         </ion-card-header>
 
         <ion-card-content class="c-card__content u-d-flex u-flex-column">
-          <h4 class="h3"><b>{{result.city_name}}</b></h4>
-          <span>{{countries.getCountryName(result.country_code)}}</span>
+          <h4 class="h3"><b>{{location.city_name}}</b></h4>
+          <span>{{countries.getCountryName(location.country_code)}}</span>
           <!-- Add card content here! -->
         </ion-card-content>
 

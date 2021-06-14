@@ -5,6 +5,7 @@ import { CurrentObs } from 'src/app/core/models/currentObs.model';
 import { AppState } from 'src/app/store/state/weather.state';
 import * as WeatherSelectors from 'src/app/store/selectors/weather.selectors';
 import { filter, map } from 'rxjs/operators';
+import { SunTime } from 'src/app/core/models/sunTime.model';
 
 @Component({
   selector: 'app-information',
@@ -13,7 +14,7 @@ import { filter, map } from 'rxjs/operators';
 })
 export class InformationComponent implements OnInit {
   public readonly weatherData$: Observable<CurrentObs> = this.store.pipe(select(WeatherSelectors.selectCurrentWeather));
-  public sunTime$;
+  public sunTime$: Observable<SunTime>;
   slideOpts = {
     initialSlide: 0,
     speed: 400
@@ -21,14 +22,17 @@ export class InformationComponent implements OnInit {
   constructor(
     private store: Store<AppState>) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sunTime$ = this.weatherData$.pipe(
       filter(value => !!value),
       map((value: CurrentObs) => this.getSunTime(value.sunset, value.sunrise)));
   }
-  getSunTime(sunset: string, sunrise: string) {
+
+  getSunTime(sunset: string, sunrise: string): SunTime {
     const sunsetDate = sunset.split(':');
     const sunriseDate = sunrise.split(':');
+    console.log(sunriseDate);
+
     return {
       sunset: {
         hour: (sunsetDate[0] === '00' ? 24 : +sunsetDate[0]) - 4,
@@ -38,7 +42,7 @@ export class InformationComponent implements OnInit {
         hour: (sunriseDate[0] === '00' ? 24 : +sunriseDate[0]) - 4,
         minutes: +sunriseDate[1]
       }
-    }
+    } as SunTime;
   }
 
 }
