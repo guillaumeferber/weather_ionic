@@ -8,11 +8,11 @@
     </p>
   </div>
   <main class="u-d-flex u-align-items-center" [ngClass]="[direction === 'column' ? 'u-flex-column' : 'row']">
-    <span class="c-weather-icon" [ngStyle]="{ 'background-image': 'url(' + (weatherIcon$ | async) + ')' }"></span>
     <h1>
       <ng-container *ngIf="weatherData$ | async">
         {{ (weatherData$ | async).temp }}&deg;C
       </ng-container>
     </h1>
+    <span class="c-weather-icon" [ngStyle]="{ 'background-image': 'url(' + (weatherIcon$ | async) + ')' }"></span>
   </main>
 </div>

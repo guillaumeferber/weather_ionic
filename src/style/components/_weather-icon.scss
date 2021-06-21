@@ -1,9 +1,11 @@
 .c-weather-icon {
-  --dimensions: 6rem;
+  --dimensions: 4rem;
   height: var(--dimensions);
   width: var(--dimensions);
   .u-flex-column & {
-    --dimensions: 8rem;
+    --dimensions: 10rem;
+    margin-top: -5rem;
+    margin-left: 10rem;
   }
   display: flex;
   background-repeat:no-repeat;

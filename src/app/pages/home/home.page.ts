@@ -7,7 +7,7 @@ import * as HydrateActions from 'src/app/store/actions/hydration.actions';
 import { Observable } from 'rxjs';
 import { CurrentObs } from 'src/app/core/models/currentObs.model';
 import { PositionError } from '@ionic-native/geolocation/ngx';
-import { ActivatedRoute, ParamMap, Params } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -17,16 +17,19 @@ export class HomePage implements OnInit {
   public readonly weatherData$: Observable<CurrentObs> = this.store.pipe(select(WeatherSelectors.selectCurrentWeather));
   public readonly selectError$: Observable<PositionError> = this.store.select(WeatherSelectors.selectError);
   selectCurrentGeoLocation$: Observable<GeolocationCoordinates> = this.store.pipe(select(WeatherSelectors.selectCurrentGeoLocation));
-
+  selectedLocation$: Observable<CurrentObs> = this.store.pipe(select(WeatherSelectors.selectSelectedLocation));
   constructor(
-    private route: ActivatedRoute,
     private store: Store<AppState>) { }
+
   ngOnInit() {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      if (!params.get('location')) {
-        this.store.dispatch(WeatherActions.getGeoLocation());
-        this.store.dispatch(HydrateActions.hydrate());
-      }
-    });
+    this.selectedLocation$
+      .pipe(filter((location: CurrentObs) => !!location))
+      .subscribe((location: CurrentObs) => {
+        if (!!location) {
+          this.store.dispatch(WeatherActions.getGeoLocation());
+        }
+      });
+      this.store.dispatch(WeatherActions.getGeoLocation());
+      this.store.dispatch(HydrateActions.hydrate());
   }
 }

@@ -33,3 +33,8 @@ export const selectLocations = createSelector(
   (state: AppState) => state.weather.locations,
   (locations: CurrentObs[]) => locations
 );
+
+export const selectSelectedLocation = createSelector(
+  (state: AppState) => state.weather.selectedLocation,
+  (location: CurrentObs) => location
+);

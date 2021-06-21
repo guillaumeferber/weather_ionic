@@ -1,0 +1,11 @@
+.active {
+  position: relative;
+  &:after {
+    position: absolute;
+    content: "\2605";
+    font-size: 1.6rem;
+    color: gold;
+    top: .7rem;
+    left: 1rem;
+  }
+}

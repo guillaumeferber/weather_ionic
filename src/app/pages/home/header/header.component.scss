@@ -17,9 +17,17 @@ main {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    & + span {
+      order: -1;
+      --dimensions: 6rem;
+    }
   }
   &.u-flex-column h1 {
-    --title-font-size: 8rem;
+    --title-font-size: 10rem;
+    & + span {
+      order: 1;
+      --dimensions: 10rem;
+    }
   }
 }
 

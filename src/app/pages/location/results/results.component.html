@@ -3,7 +3,7 @@
 <ng-template #hasResults>
   <article class="u-m-t-0 c-card-container">
     <ng-container *ngFor="let location of locations$ | async">
-      <ion-card class="c-card" (click)="selectLocation(location)">
+      <ion-card class="c-card" (click)="selectLocation(location)" [ngClass]="{'active': activeLocationClass(location)}">
 
         <ion-card-header class="c-card__header">
           <h2>{{location.temp | number:'1.0-0'}}&deg;C</h2>

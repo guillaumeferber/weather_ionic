@@ -11,6 +11,7 @@ const initialState: WeatherAppState = {
   forecastDaily: null,
   locations: [],
   selectedForecastDaily: null,
+  selectedLocation: null,
   error: null,
   loading: false
 };
@@ -22,13 +23,19 @@ const getGeoLocation = (state: WeatherAppState) => ({
 
 const getLocationSuccess = (state: WeatherAppState, location: CurrentObs[]) => ({
   ...state,
-  locations: [...state.locations, ...location] as CurrentObs[]
+  locations: [...state.locations, ...location] as CurrentObs[],
+  selectedLocation: location[0]
 });
 
 const getLocationError = (state: WeatherAppState, error: string) => ({
   ...state,
   error,
   loading: initialState.loading
+});
+
+const selectLocation = (state: WeatherAppState, location: CurrentObs) => ({
+  ...state,
+  selectedLocation: location
 });
 
 const getGeoLocationSuccess = (state: WeatherAppState, coords: GeolocationCoordinates) => {
@@ -85,6 +92,8 @@ const weatherReducer = createReducer(
     (state: WeatherAppState, { id }: { id: number }) => selectForecastDay(state, id)),
   on(WeatherActions.getLocationSuccess,
     (state: WeatherAppState, { location }: { location: CurrentObs[] }) => getLocationSuccess(state, location)),
+  on(WeatherActions.selectLocation,
+    (state: WeatherAppState, { location }: { location: CurrentObs }) => selectLocation(state, location)),
   on(WeatherActions.getLocationError,
     (state: WeatherAppState, { error }: { error: string }) => getLocationError(state, error)),
 );
