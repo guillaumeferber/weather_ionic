@@ -15,11 +15,19 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    const apiData = {
+      keyProp: environment.api[environment.api.default].keyProp,
+      key: environment.api[environment.api.default].key
+    };
+    let headers = request.headers.set('Content-Type', 'application/json');
+    if (request.url.includes('api')) {
+      apiData.key = environment.api.googleapis.key;
+    }
     const reqWithHeaders = request.clone({
-      headers: request.headers.set('Content-Type', 'application/json'),
+      headers,
       params: request.params.append(
-        environment.api[environment.api.default].keyProp,
-        environment.api[environment.api.default].key)
+        apiData.keyProp,
+        apiData.key)
     });
     return next.handle(reqWithHeaders);
   }

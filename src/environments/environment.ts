@@ -11,6 +11,11 @@ export const environment = {
       key: '5a8ea8f781bd4aadaa9d2c868abe0f06',
       baseUrl: 'https://api.weatherbit.io/v2.0/'
     },
+    googleapis: {
+      keyProp: 'key',
+      key: 'AIzaSyCH9Y4o_SOUGHVOmV_05KA-Q0emg1WD3ho',
+      baseUrl: 'api'
+    },
     openWeatherMap: {
       keyProp: 'appid',
       key: '9113f85e772949f85e980bac5996f496',

@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "https://maps.googleapis.com/maps/api/place/queryautocomplete/json",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

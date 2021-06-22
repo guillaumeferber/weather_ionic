@@ -31,15 +31,14 @@ export class InformationComponent implements OnInit {
   getSunTime(sunset: string, sunrise: string): SunTime {
     const sunsetDate = sunset.split(':');
     const sunriseDate = sunrise.split(':');
-    console.log(sunriseDate);
 
     return {
       sunset: {
-        hour: (sunsetDate[0] === '00' ? 24 : +sunsetDate[0]) - 4,
+        hour: (sunsetDate[0] === '00' ? 24 : +sunsetDate[0]),
         minutes: +sunsetDate[1]
       },
       sunrise: {
-        hour: (sunriseDate[0] === '00' ? 24 : +sunriseDate[0]) - 4,
+        hour: (sunriseDate[0] === '00' ? 24 : +sunriseDate[0]),
         minutes: +sunriseDate[1]
       }
     } as SunTime;

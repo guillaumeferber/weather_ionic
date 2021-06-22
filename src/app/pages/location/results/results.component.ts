@@ -20,14 +20,12 @@ export class ResultsComponent {
   error$: Observable<PositionError | string> = this.store.select(WeatherSelectors.selectError);
   public countries = Countries;
   private active: BehaviorSubject<Query> = new BehaviorSubject(null);
-  public active$: Observable<Query>;
+  public active$: Observable<Query> = this.active.asObservable();
 
   constructor(
     private router: Router,
     private store: Store<AppState>,
-    private weatherIconService: WeatherIconService) {
-      this.active$ = this.active.asObservable();
-    }
+    private weatherIconService: WeatherIconService) {}
 
   getWeatherIcon(value: CurrentObs): string {
     return this.weatherIconService.getWeatherIcon(value);

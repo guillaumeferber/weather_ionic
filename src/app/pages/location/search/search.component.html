@@ -4,7 +4,10 @@
     <form [formGroup]="searchGroup">
       <fieldset>
         <ion-icon name="search"></ion-icon>
-        <input #input type="text" formControlName="city" placeholder="Search city">
+        <input #input type="text" formControlName="city" placeholder="Search city" list="cities">
+        <datalist id="cities">
+          <option *ngFor="let prediction of predictions" [attr.value]="prediction">
+        </datalist>
       </fieldset>
     </form>
   </ng-template>
