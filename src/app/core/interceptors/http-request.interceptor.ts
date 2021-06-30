@@ -20,7 +20,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
       key: environment.api[environment.api.default].key
     };
     let headers = request.headers.set('Content-Type', 'application/json');
-    if (request.url.includes('api')) {
+    if (request.url ==='api') {
       apiData.key = environment.api.googleapis.key;
     }
     const reqWithHeaders = request.clone({

@@ -4,10 +4,15 @@
     <form [formGroup]="searchGroup">
       <fieldset>
         <ion-icon name="search"></ion-icon>
-        <input #input type="text" formControlName="city" placeholder="Search city" list="cities">
-        <datalist id="cities">
-          <option *ngFor="let prediction of predictions" [attr.value]="prediction">
-        </datalist>
+        <div class="autocomplete">
+          <ion-searchbar formControlName="city" (ionFocus)="addFocus()" (ionBlur)="removeFocus()" debounce=500>
+          </ion-searchbar>
+          <ion-list>
+            <ion-item *ngFor="let res of predictions | async" (click)="addValue(res)">
+              {{res.description}}
+            </ion-item>
+          </ion-list>
+        </div>
       </fieldset>
     </form>
   </ng-template>
